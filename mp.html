@@ -279,34 +279,122 @@ $13: payload: 54, tag: 1
 <h2>Interface (Messages)<a class="headerlink" href="#interface-messages" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="epiphany">
 <h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv315bsp_set_tagsizePi">
+<span id="_CPPv215bsp_set_tagsizePi"></span><span id="bsp_set_tagsize__iP"></span><span class="target" id="e__bsp_8h_1a1f711c4d860f03a90257f6072d9e70ec"></span>void <code class="descname">bsp_set_tagsize</code><span class="sig-paren">(</span>int *<em>tag_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the tag size. </p>
+<p><p>Upon return, the value pointed to by tag_bytes will contain the old tag size. The new tag size will take effect in the next superstep, so that messages sent in this superstep will have the old tag size. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_bytes</span></code>: A pointer to the tag size, in bytes</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv316ebsp_get_tagsizev">
+<span id="_CPPv216ebsp_get_tagsizev"></span><span id="ebsp_get_tagsize"></span><span class="target" id="e__bsp_8h_1a47cf6f4bc4ee48eddc146f52d7eb8f95"></span>int <code class="descname">ebsp_get_tagsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the tag size. </p>
+<p><p>This function gets the tag size currently in use. This tagsize remains valid until the start of the next superstep. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The tag size in bytes</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv38bsp_sendiPKvPKvi">
+<span id="_CPPv28bsp_sendiPKvPKvi"></span><span id="bsp_send__i.voidCP.voidCP.i"></span><span class="target" id="e__bsp_8h_1a2d79a679686a5357acc6ba936ec60017"></span>void <code class="descname">bsp_send</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Send a message to another processor. </p>
+<p><p>This will send a message to the target processor, using the message passing system. The tag size can be obtained by ebsp_get_tagsize. When this function returns, the data has been copied so the user can use the buffer for other purposes. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor (this is allowed to be the id of the sending processor) </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the tag data </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the data payload</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv39bsp_qsizePiPi">
+<span id="_CPPv29bsp_qsizePiPi"></span><span id="bsp_qsize__iP.iP"></span><span class="target" id="e__bsp_8h_1ae2fc27ea113832763a241d165e3ea30c"></span>void <code class="descname">bsp_qsize</code><span class="sig-paren">(</span>int *<em>packets</em>, int *<em>accum_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain The number of messages in the queue and the combined size in bytes of their data. </p>
+<p><p>Upon return, the integers pointed to by packets and accum_bytes will hold the number of messages in the queue, and the sum of the sizes of their data payloads respectively. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">packets</span></code>: A pointer to an integer which will be overwritten with the number of messages </li>
+<li><code class="docutils literal notranslate"><span class="pre">accum_bytes</span></code>: A pointer to an integer which will be overwritten with the combined number of bytes of the message data.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv311bsp_get_tagPiPv">
+<span id="_CPPv211bsp_get_tagPiPv"></span><span id="bsp_get_tag__iP.voidP"></span><span class="target" id="e__bsp_8h_1a808006e4c1d86e97d8c7a761010fb9e1"></span>void <code class="descname">bsp_get_tag</code><span class="sig-paren">(</span>int *<em>status</em>, void *<em>tag</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the tag and size of the next message without popping the message. </p>
+<p><p>Upon return, the integer pointed to by status will receive the size of the data payload in bytes of the next message in the queue. If there is no next message it will be set to -1. The buffer pointed to by tag should be large enough to store the tag. The minimum size can be obtained by calling ebsp_get_tagsize. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">status</span></code>: A pointer to an integer receiving the message data size in bytes. </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to a buffer receiving the message tag</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv38bsp_movePvi">
+<span id="_CPPv28bsp_movePvi"></span><span id="bsp_move__voidP.i"></span><span class="target" id="e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"></span>void <code class="descname">bsp_move</code><span class="sig-paren">(</span>void *<em>payload</em>, int <em>buffer_size</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the next message from the message queue and pop the message. </p>
+<p><p>This will copy the payload and pop the message from the queue. The size of the payload can be obtained by calling </p>
+<a class="reference internal" href="#e__bsp_8h_1a808006e4c1d86e97d8c7a761010fb9e1"><span class="std std-ref">bsp_get_tag()</span></a>. If <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> is smaller than the data payload then the data is truncated. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to a buffer receiving the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">buffer_size</span></code>: The size of the buffer</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv310bsp_hpmovePPvPPv">
+<span id="_CPPv210bsp_hpmovePPvPPv"></span><span id="bsp_hpmove__voidPP.voidPP"></span><span class="target" id="e__bsp_8h_1a932e0b8b2e82f5ee402adecee0e921dc"></span>int <code class="descname">bsp_hpmove</code><span class="sig-paren">(</span>void **<em>tag_ptr_buf</em>, void **<em>payload_ptr_buf</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the next message, with tag, from the queue and pop the message. </p>
+<p><p>This function will give the user direct pointers to the tag and data of the message. This avoids the data copy as done in </p>
+<a class="reference internal" href="#e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"><span class="std std-ref">bsp_move()</span></a>.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The number of bytes of the payload data</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_ptr_buf</span></code>: A pointer to a pointer receiving the location of the tag </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload_ptr_buf</span></code>: A pointer to a pointer receiving the location of the data pyaload </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>that both tag and payload can be stored in external memory. Repeated use of these tags will lead to overall worse performance, such that <a class="reference internal" href="#e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"><span class="std std-ref">bsp_move()</span></a> can actually outperform this variant. </dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -332,7 +420,7 @@ $13: payload: 54, tag: 1
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015-2017, Coduin.
-      Last updated on Jun 15, 2018.
+      Last updated on Jun 16, 2018.
 
     </p>
   </div> 

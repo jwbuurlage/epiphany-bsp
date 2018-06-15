@@ -230,13 +230,13 @@
 - <code class="docutils literal notranslate"><span class="pre">buffer1</span></code>, as well as the data it points to
 - <code class="docutils literal notranslate"><span class="pre">my_function</span></code> (the machine code)
 However, <code class="docutils literal notranslate"><span class="pre">buffer2</span></code> points to data that is stored in the large <em>external memory</em>. The pointer itself is stored in local memory.</p>
-<p>In general, global and local variables in your C source code will be stored in local memory, unless otherwise specified with some special gcc attributes. Code itself (i.e. the machine code) can also be stored in both types of memory. Normal C code will be stored in local memory, unless specified using gcc attributes. Variables allocated using <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_ext_malloc()</span></code> are stored in external memory.</p>
+<p>In general, global and local variables in your C source code will be stored in local memory, unless otherwise specified with some special gcc attributes. Code itself (i.e. the machine code) can also be stored in both types of memory. Normal C code will be stored in local memory, unless specified using gcc attributes. Variables allocated using <a class="reference internal" href="#_CPPv315ebsp_ext_mallocj" title="ebsp_ext_malloc"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_ext_malloc()</span></code></a> are stored in external memory.</p>
 </div>
 <div class="section" id="data-copying">
 <h2>Data copying<a class="headerlink" href="#data-copying" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="direct-memcpy">
 <h3>Direct memcpy<a class="headerlink" href="#direct-memcpy" title="Permalink to this headline">¶</a></h3>
-<p>In C you can copy data using <code class="docutils literal notranslate"><span class="pre">memcpy(destination,</span> <span class="pre">source,</span> <span class="pre">nbytes)</span></code>. This function is available on the Epiphany as well, but its implementation (depending on the version of gcc and newlib) is not properly optimized for the Epiphany architecture. In particular the function itself is stored in external memory (unless you choose to save the complete C library in local memory) and it also does not perform 8-byte transfers. For this reason we have created <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_memcpy()</span></code> which is stored in local memory and does transfers utilizing 8-byte read/write instructions when possible. It is therefore faster than <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> and should be preferred.</p>
+<p>In C you can copy data using <code class="docutils literal notranslate"><span class="pre">memcpy(destination,</span> <span class="pre">source,</span> <span class="pre">nbytes)</span></code>. This function is available on the Epiphany as well, but its implementation (depending on the version of gcc and newlib) is not properly optimized for the Epiphany architecture. In particular the function itself is stored in external memory (unless you choose to save the complete C library in local memory) and it also does not perform 8-byte transfers. For this reason we have created <a class="reference internal" href="#_CPPv311ebsp_memcpyPvPKv6size_t" title="ebsp_memcpy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_memcpy()</span></code></a> which is stored in local memory and does transfers utilizing 8-byte read/write instructions when possible. It is therefore faster than <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> and should be preferred.</p>
 </div>
 <div class="section" id="dma-engine">
 <h3>DMA engine<a class="headerlink" href="#dma-engine" title="Permalink to this headline">¶</a></h3>
@@ -246,7 +246,7 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
 <p class="first admonition-title">Warning</p>
 <p class="last">The DMA engine can not transfer data from the local core to itself (i.e. to another memory location in the same core). Either the source or destination (or both) should point to another core’s memory or to external memory.</p>
 </div>
-<p>The Epiphany BSP library provides the functions <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> and <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code>. They implement a queue of DMA tasks that are handled sequentially. With <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> you can push a task to this queue and with <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code> you can wait for the task to complete:</p>
+<p>The Epiphany BSP library provides the functions <a class="reference internal" href="#_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t" title="ebsp_dma_push"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code></a> and <a class="reference internal" href="#_CPPv313ebsp_dma_waitP15ebsp_dma_handle" title="ebsp_dma_wait"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code></a>. They implement a queue of DMA tasks that are handled sequentially. With <a class="reference internal" href="#_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t" title="ebsp_dma_push"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code></a> you can push a task to this queue and with <a class="reference internal" href="#_CPPv313ebsp_dma_waitP15ebsp_dma_handle" title="ebsp_dma_wait"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code></a> you can wait for the task to complete:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// A handle identifies the transfer task</span>
 <span class="n">ebsp_dma_handle</span> <span class="n">descriptor_1</span><span class="p">;</span>
 <span class="n">ebsp_dma_handle</span> <span class="n">descriptor_2</span><span class="p">;</span>
@@ -264,7 +264,7 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
 </pre></div>
 </div>
 <p>Pushing a new task will start the DMA engine if it was not started yet. If it was already running, the library will add the task to an internal queue and automatically point the DMA engine to the next task when it is finished. For those who are interested, this is implemented using interrupts.</p>
-<p>In order to use the DMA engine to write data to another core, one needs a memory address that points to the local memory of another core. For this we provide the function <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code>:</p>
+<p>In order to use the DMA engine to write data to another core, one needs a memory address that points to the local memory of another core. For this we provide the function <a class="reference internal" href="#_CPPv323ebsp_get_direct_addressiPKv" title="ebsp_get_direct_address"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code></a>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Some buffer</span>
 <span class="kt">float</span> <span class="n">data</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
 
@@ -279,14 +279,14 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
 <span class="o">*</span><span class="n">remote_data</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The above example shows how to obtain an address of a variable on another core. This address can then be passed as source or destination to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code>.</p>
+<p>The above example shows how to obtain an address of a variable on another core. This address can then be passed as source or destination to <a class="reference internal" href="#_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t" title="ebsp_dma_push"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code></a>.</p>
 </div>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="memory-allocation">
 <h3>Memory allocation<a class="headerlink" href="#memory-allocation" title="Permalink to this headline">¶</a></h3>
-<p>The memory allocation functions work analogously to the normal C function <code class="docutils literal notranslate"><span class="pre">malloc</span></code>. Memory allocated by <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_ext_malloc()</span></code> and by <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_malloc()</span></code> can both be freed with the same function <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_free()</span></code>, as in the following example:</p>
+<p>The memory allocation functions work analogously to the normal C function <code class="docutils literal notranslate"><span class="pre">malloc</span></code>. Memory allocated by <a class="reference internal" href="#_CPPv315ebsp_ext_mallocj" title="ebsp_ext_malloc"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_ext_malloc()</span></code></a> and by <a class="reference internal" href="#_CPPv311ebsp_mallocj" title="ebsp_malloc"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_malloc()</span></code></a> can both be freed with the same function <a class="reference internal" href="#_CPPv39ebsp_freePv" title="ebsp_free"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_free()</span></code></a>, as in the following example:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Allocate local memory</span>
 <span class="kt">float</span><span class="o">*</span> <span class="n">local_data</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">local_data</span><span class="p">)</span> <span class="p">{</span>
@@ -307,7 +307,7 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that calling <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_free()</span></code> with a null pointer results in undefined behaviour, so the following is <strong>NOT</strong> allowed:</p>
+<p>Note that calling <a class="reference internal" href="#_CPPv39ebsp_freePv" title="ebsp_free"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_free()</span></code></a> with a null pointer results in undefined behaviour, so the following is <strong>NOT</strong> allowed:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="o">*</span> <span class="n">local_data</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">local_data</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
@@ -320,7 +320,7 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
 </div>
 <div class="section" id="external-memory-dma-transfers">
 <h3>External memory DMA transfers<a class="headerlink" href="#external-memory-dma-transfers" title="Permalink to this headline">¶</a></h3>
-<p>The following example demonstrates the use of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> to write a buffer of local data to external memory and read a buffer from external memory using the DMA engine.:</p>
+<p>The following example demonstrates the use of <a class="reference internal" href="#_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t" title="ebsp_dma_push"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code></a> to write a buffer of local data to external memory and read a buffer from external memory using the DMA engine.:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Allocate buffers</span>
 <span class="kt">float</span><span class="o">*</span> <span class="n">external_data_1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_ext_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
 <span class="kt">float</span><span class="o">*</span> <span class="n">external_data_2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_ext_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
@@ -363,7 +363,7 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
 </div>
 <div class="section" id="core-to-core-dma-transfers">
 <h3>Core to core DMA transfers<a class="headerlink" href="#core-to-core-dma-transfers" title="Permalink to this headline">¶</a></h3>
-<p>To use the DMA to transfer data to another core, we need to get the address that points to another core. This can be done using <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code>. In the following example we have to arrays: <code class="docutils literal notranslate"><span class="pre">my_data</span></code> and <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code>. The idea is to copy the contents of <code class="docutils literal notranslate"><span class="pre">my_data</span></code> on the local core into <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code> on the next core. To do this, we first register <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code>. After this we can get the address of the corresponding array on a remote core. In this case we take the core with pid <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">+</span> <span class="pre">1</span></code> where <code class="docutils literal notranslate"><span class="pre">s</span></code> is the pid of the local core. With this address we can now use <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> to copy data using the DMA engine. During this transfer, other computations can be done. After this we use <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code> which blocks untill the transfer is complete (or returns immediately if already completed).:</p>
+<p>To use the DMA to transfer data to another core, we need to get the address that points to another core. This can be done using <a class="reference internal" href="#_CPPv323ebsp_get_direct_addressiPKv" title="ebsp_get_direct_address"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code></a>. In the following example we have to arrays: <code class="docutils literal notranslate"><span class="pre">my_data</span></code> and <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code>. The idea is to copy the contents of <code class="docutils literal notranslate"><span class="pre">my_data</span></code> on the local core into <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code> on the next core. To do this, we first register <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code>. After this we can get the address of the corresponding array on a remote core. In this case we take the core with pid <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">+</span> <span class="pre">1</span></code> where <code class="docutils literal notranslate"><span class="pre">s</span></code> is the pid of the local core. With this address we can now use <a class="reference internal" href="#_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t" title="ebsp_dma_push"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code></a> to copy data using the DMA engine. During this transfer, other computations can be done. After this we use <a class="reference internal" href="#_CPPv313ebsp_dma_waitP15ebsp_dma_handle" title="ebsp_dma_wait"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code></a> which blocks untill the transfer is complete (or returns immediately if already completed).:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bsp_pid</span><span class="p">();</span>
 <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
 
@@ -397,34 +397,169 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
 </div>
 <div class="section" id="interface">
 <h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
+<dl class="function">
+<dt id="_CPPv315ebsp_ext_mallocj">
+<span id="_CPPv215ebsp_ext_mallocj"></span><span id="ebsp_ext_malloc__unsigned-i"></span><span class="target" id="e__bsp_8h_1a36d7a889aaceb60fa730cbbc434803a6"></span>void *<code class="descname">ebsp_ext_malloc</code><span class="sig-paren">(</span>unsigned int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv315ebsp_ext_mallocj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allocate external memory. </p>
+<p><p>This function allocates memory in external RAM, meaning the memory is slow and should not be used with time critical computations.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A pointer to the allocated memory, guaranteed to be 8-byte aligned to ensure fast transfers, or zero on error.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the memory block </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>When no more space is available, the function will return zero. Note that it is not allowed to call <a class="reference internal" href="#e__bsp_8h_1a20a3b8f183945f4b5ead68f4549e99df"><span class="std std-ref">ebsp_free()</span></a> with a zero pointer so this should always be checked. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv311ebsp_mallocj">
+<span id="_CPPv211ebsp_mallocj"></span><span id="ebsp_malloc__unsigned-i"></span><span class="target" id="e__bsp_8h_1ae24da840f5ceb1d602a68fc820817014"></span>void *<code class="descname">ebsp_malloc</code><span class="sig-paren">(</span>unsigned int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv311ebsp_mallocj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allocate local memory. </p>
+<p><p>This function allocates memory in local SRAM, meaning the memory is fast but extremely limited.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A pointer to the allocated memory, guaranteed to be 8-byte aligned to ensure fast transfers, or zero on error.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the memory block </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>When no more space is available, the function will return zero. Note that it is not allowed to call <a class="reference internal" href="#e__bsp_8h_1a20a3b8f183945f4b5ead68f4549e99df"><span class="std std-ref">ebsp_free()</span></a> with a zero pointer so this should always be checked. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv39ebsp_freePv">
+<span id="_CPPv29ebsp_freePv"></span><span id="ebsp_free__voidP"></span><span class="target" id="e__bsp_8h_1a20a3b8f183945f4b5ead68f4549e99df"></span>void <code class="descname">ebsp_free</code><span class="sig-paren">(</span>void *<em>ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39ebsp_freePv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Free allocated external or local memory. </p>
+<p><p>Note that the malloc functions can return null pointers on error, and ebsp_free will crash on null pointers. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">ptr</span></code>: A pointer to memory previously allocated by <a class="reference internal" href="#e__bsp_8h_1a36d7a889aaceb60fa730cbbc434803a6"><span class="std std-ref">ebsp_ext_malloc()</span></a> or by <a class="reference internal" href="#e__bsp_8h_1ae24da840f5ceb1d602a68fc820817014"><span class="std std-ref">ebsp_malloc()</span></a></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv311ebsp_memcpyPvPKv6size_t">
+<span id="_CPPv211ebsp_memcpyPvPKv6size_t"></span><span id="ebsp_memcpy__voidP.voidCP.s"></span><span class="target" id="e__bsp_8h_1adc3229240bd5a078502645d9354064ae"></span>void <code class="descname">ebsp_memcpy</code><span class="sig-paren">(</span>void *<em>dst</em>, <em class="property">const</em> void *<em>src</em>, size_t <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv311ebsp_memcpyPvPKv6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Performs a memory copy completely analogous to the standard C memcpy(). </p>
+<p><p>This function is provided because the default </p>
+<code class="docutils literal notranslate"><span class="pre">memcpy</span></code> generated by the epiphany-gcc compiler has some drawbacks. First of all it is stored in external memory, unless you store the full C library (newlib) on the epiphany cores. Secondly it does not do the optimal 8-byte transfers so it is far from optimal.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: Destination address </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: Source address </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: Amount of bytes to be copied</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>This function resides in local core memory and does 8-byte transfers when possible, meaning if both <code class="docutils literal notranslate"><span class="pre">dst</span></code> and <code class="docutils literal notranslate"><span class="pre">src</span></code> are 8-byte aligned. In other cases, 4-byte or single byte transfers are used. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t">
+<span id="_CPPv213ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t"></span><span id="ebsp_dma_push__ebsp_dma_handleP.voidP.voidCP.s"></span><span class="target" id="e__bsp_8h_1a420af4fdfd05e96d2772c3faa5e4f2d7"></span>void <code class="descname">ebsp_dma_push</code><span class="sig-paren">(</span>ebsp_dma_handle *<em>desc</em>, void *<em>dst</em>, <em class="property">const</em> void *<em>src</em>, size_t <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Push a new task to the DMA engine. </p>
+<p>See the documentation on Memory Management for details on the DMA engine. <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+<p class="last">Source <code class="docutils literal notranslate"><span class="pre">src</span></code> and destination <code class="docutils literal notranslate"><span class="pre">dst</span></code> can <strong>NOT</strong> be both on the local
+core. Doing so results in undefined behaviour. At least one of the two
+addresses should be on another core or in external memory.</p>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">desc</span></code>: Used in combination with <a class="reference internal" href="#e__bsp_8h_1aa6f8f0141eadd19b4c541de4c4cbcdd1"><span class="std std-ref">ebsp_dma_wait()</span></a>. Should be seen as a <em>handle</em> to the task. Its contents are populated by this function. </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: Destination address </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: Source address </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: Amount of bytes to be copied</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Assumes previous task in <code class="docutils literal notranslate"><span class="pre">desc</span></code> is completed (use <a class="reference internal" href="#e__bsp_8h_1aa6f8f0141eadd19b4c541de4c4cbcdd1"><span class="std std-ref">ebsp_dma_wait()</span></a>)</p>
+<p>The DMA (<code class="docutils literal notranslate"><span class="pre">E_DMA_1</span></code>) will be started if it was not started yet. If it was already started, this task will be pushed to a queue so that it will be done some time later. Use <a class="reference internal" href="#e__bsp_8h_1aa6f8f0141eadd19b4c541de4c4cbcdd1"><span class="std std-ref">ebsp_dma_wait()</span></a> to wait for the task to complete.</p>
+<p>Usage example: <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bsp_pid</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
+
+<span class="c1">// Data to be sent</span>
+<span class="kt">float</span> <span class="n">mydata</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+
+<span class="c1">// Buffer to receive data</span>
+<span class="kt">float</span> <span class="n">incomingdata</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+
+<span class="c1">// Register it in the BSP system</span>
+<span class="n">bsp_push_reg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">incomingdata</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">incomingdata</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="c1">// Get an address for the incomingdata buffer on the core with pid s + 1.</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">remotedata</span> <span class="o">=</span> <span class="n">ebsp_get_direct_address</span><span class="p">((</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">incomingdata</span><span class="p">);</span>
+
+<span class="c1">// Start the DMA to copy the data from mydata on this core to incomingdata on the next core</span>
+<span class="n">ebsp_dma_handle</span> <span class="n">descriptor</span><span class="p">;</span>
+<span class="n">ebsp_dma_push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor</span><span class="p">,</span> <span class="n">remotedata</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mydata</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">mydata</span><span class="p">));</span>
+
+<span class="c1">// Do lengthy computation</span>
+<span class="n">do_computations</span><span class="p">();</span>
+
+<span class="c1">// Wait for the DMA transfer to finish</span>
+<span class="n">ebsp_dma_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor</span><span class="p">);</span>
+
+<span class="c1">// Done</span>
+</pre></div>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The <code class="docutils literal notranslate"><span class="pre">desc</span></code> pointer should be 8-byte aligned or behaviour is undefined. This should not be a problem because the malloc functions always return 8-byte aligned pointers, and having an <code class="docutils literal notranslate"><span class="pre">ebsp_dma_handle</span></code> struct as local variable will be 8-byte aligned as well. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv313ebsp_dma_waitP15ebsp_dma_handle">
+<span id="_CPPv213ebsp_dma_waitP15ebsp_dma_handle"></span><span id="ebsp_dma_wait__ebsp_dma_handleP"></span><span class="target" id="e__bsp_8h_1aa6f8f0141eadd19b4c541de4c4cbcdd1"></span>void <code class="descname">ebsp_dma_wait</code><span class="sig-paren">(</span>ebsp_dma_handle *<em>desc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv313ebsp_dma_waitP15ebsp_dma_handle" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Wait for the task to be completed. </p>
+<p><p>This function blocks untill the task in </p>
+<code class="docutils literal notranslate"><span class="pre">desc</span></code> is completed. Use somewhere after <a class="reference internal" href="#e__bsp_8h_1a420af4fdfd05e96d2772c3faa5e4f2d7"><span class="std std-ref">ebsp_dma_push()</span></a>. See <a class="reference internal" href="#e__bsp_8h_1a420af4fdfd05e96d2772c3faa5e4f2d7"><span class="std std-ref">ebsp_dma_push()</span></a> for example code. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">desc</span></code>: Handle for a task. See <a class="reference internal" href="#e__bsp_8h_1a420af4fdfd05e96d2772c3faa5e4f2d7"><span class="std std-ref">ebsp_dma_push()</span></a>.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv323ebsp_get_direct_addressiPKv">
+<span id="_CPPv223ebsp_get_direct_addressiPKv"></span><span id="ebsp_get_direct_address__i.voidCP"></span><span class="target" id="e__bsp_8h_1ab54296d8550bf8abab50c9b5e1854682"></span>void *<code class="descname">ebsp_get_direct_address</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>variable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv323ebsp_get_direct_addressiPKv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get a raw remote memory address for a variable that was registered using <a class="reference internal" href="variables.html#e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"><span class="std std-ref">bsp_push_reg()</span></a> </p>
+<p><p>The returned pointer (if nonzero) can be written to and read from directly. Note that the data will be transferred directly, as in </p>
+<a class="reference internal" href="variables.html#e__bsp_8h_1a64cbcfe4c116ab6ea04f7f7235f17965"><span class="std std-ref">bsp_hpput()</span></a>, so synchronization issues should be considered.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A pointer to the remote variable, or 0 if it was not registered</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: Remote core id </li>
+<li><code class="docutils literal notranslate"><span class="pre">variable</span></code>: An address that was registered using <a class="reference internal" href="variables.html#e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"><span class="std std-ref">bsp_push_reg()</span></a> </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>This function is meant to be used in combination with <a class="reference internal" href="#e__bsp_8h_1a420af4fdfd05e96d2772c3faa5e4f2d7"><span class="std std-ref">ebsp_dma_push()</span></a> to transfer data between cores while doing computations at the same time. </p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -449,7 +584,7 @@ However, <code class="docutils literal notranslate"><span class="pre">buffer2</s
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015-2017, Coduin.
-      Last updated on Jun 15, 2018.
+      Last updated on Jun 16, 2018.
 
     </p>
   </div> 

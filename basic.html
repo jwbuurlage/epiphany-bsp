@@ -254,45 +254,169 @@ $00: Hello World from processor 0 / 16
 <h2>Interface (Basics)<a class="headerlink" href="#interface-basics" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="host">
 <h3>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+<dl class="function">
+<dt id="_CPPv38bsp_initPKciPPc">
+<span id="_CPPv28bsp_initPKciPPc"></span><span id="bsp_init__cCP.i.cPP"></span><span class="target" id="host__bsp_8h_1a0e3c4e8b772e2ed3d8b231289d694e9c"></span>int <code class="descname">bsp_init</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>e_name</em>, int <em>argc</em>, char **<em>argv</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Initializes the BSP system. </p>
+<p><p>Sets up all the BSP variables and loads the epiphany BSP program.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">e_name</span></code>: A string with the srec binary name of the Epiphany program </li>
+<li><code class="docutils literal notranslate"><span class="pre">argc</span></code>: The number of input arguments </li>
+<li><code class="docutils literal notranslate"><span class="pre">argv</span></code>: An array of strings with the input arguments </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>The string <code class="docutils literal notranslate"><span class="pre">e_name</span></code> must be of the form <code class="docutils literal notranslate"><span class="pre">myprogram.srec</span></code>. This function will search for the file in the same directory as the host program, and not in the current working directory.</p>
+<p>Usage example: <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bsp_init</span><span class="p">(</span><span class="s">&quot;e_program.srec&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="p">...</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The <code class="docutils literal notranslate"><span class="pre">argc</span></code> and <code class="docutils literal notranslate"><span class="pre">argv</span></code> parameters are ignored in the current implementation. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv39bsp_begini">
+<span id="_CPPv29bsp_begini"></span><span id="bsp_begin__i"></span><span class="target" id="host__bsp_8h_1a6e8b0d677de36ad531e72b212e45f14e"></span>int <code class="descname">bsp_begin</code><span class="sig-paren">(</span>int <em>nprocs</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Loads the BSP program onto the Epiphany cores. </p>
+<p><p>Usage example: </p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bsp_init</span><span class="p">(</span><span class="s">&quot;e_program.srec&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">bsp_begin</span><span class="p">(</span><span class="n">bsp_nprocs</span><span class="p">());</span>
+    <span class="p">...</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">nprocs</span></code>: The number of processors to run on </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The current implementation only allows <code class="docutils literal notranslate"><span class="pre">nprocs</span></code> to be a multiple of 4 on the 16-core Parallella. Other values of <code class="docutils literal notranslate"><span class="pre">nprocs</span></code> are rounded down. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv39ebsp_spmdv">
+<span id="_CPPv29ebsp_spmdv"></span><span id="ebsp_spmd"></span><span class="target" id="host__bsp_8h_1a12385c882b6096484952fe7acad958bd"></span>int <code class="descname">ebsp_spmd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Runs the Epiphany program on the Epiphany cores. </p>
+<p><p>This function will block until the BSP kernel program is finished. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure (e.g. after <code class="docutils literal notranslate"><span class="pre">bsp_abort</span></code> is called on a core)</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv37bsp_endv">
+<span id="_CPPv27bsp_endv"></span><span id="bsp_end"></span><span class="target" id="host__bsp_8h_1a56a290cf0e1b78c832024cd5399f46d0"></span>int <code class="descname">bsp_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Finalizes and cleans up the BSP program. </p>
+<p><p>Usage example: </p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bsp_init</span><span class="p">(</span><span class="s">&quot;e_program.srec&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">bsp_begin</span><span class="p">(</span><span class="n">bsp_nprocs</span><span class="p">());</span>
+    <span class="n">ebsp_spmd</span><span class="p">();</span>
+    <span class="n">bsp_end</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>This function is different from the bsp_end function in e_bsp.h </dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="epiphany">
 <h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv39bsp_beginv">
+<span id="_CPPv29bsp_beginv"></span><span id="bsp_begin"></span><span class="target" id="e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"></span>void <code class="descname">bsp_begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39bsp_beginv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Denotes the start of a BSP program. </p>
+<p>This initializes the BSP system on the core.</p>
+<p>Must be called before calling any other BSP function. Should only be called once in a program. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv37bsp_pidv">
+<span id="_CPPv27bsp_pidv"></span><span id="bsp_pid"></span><span class="target" id="e__bsp_8h_1a1e4f897e62f8b20a7f57cc5488bfb8c8"></span>int <code class="descname">bsp_pid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the processor identifier of the local core. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>An integer with the id of the core The processor id is an integer in the range [0, .., <a class="reference internal" href="#e__bsp_8h_1a8980a3403ba99114626b34492b13c1cd"><span class="std std-ref">bsp_nprocs()</span></a> - 1]. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv310bsp_nprocsv">
+<span id="_CPPv210bsp_nprocsv"></span><span id="bsp_nprocs"></span><span class="target" id="e__bsp_8h_1a8980a3403ba99114626b34492b13c1cd"></span>int <code class="descname">bsp_nprocs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the number of Epiphany cores currently in use. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>An integer indicating the number of cores on which the program runs. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv37bsp_endv">
+<span id="_CPPv27bsp_endv"></span><span class="target" id="e__bsp_8h_1ad794334e180b711537499871020a76fe"></span>void <code class="descname">bsp_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Denotes the end of a BSP program. </p>
+<p>Finalizes and cleans up the BSP program. No other BSP functions are allowed to be called after this function is called.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Must be followed by a return statement in your main function if you want to call <code class="docutils literal notranslate"><span class="pre">ebsp_spmd()</span></code> multiple times. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv312ebsp_messagePKcz">
+<span id="_CPPv212ebsp_messagePKcz"></span><span id="ebsp_message__cCP.z"></span><span class="target" id="e__bsp_8h_1ad3a2c88749e9dab3e73b9923a5b86add"></span>void <code class="descname">ebsp_message</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>format</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv312ebsp_messagePKcz" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Output a debug message printf style. </p>
+<p><a class="reference internal" href="output.html#e__bsp_8h_1ad3a2c88749e9dab3e73b9923a5b86add"><span class="std std-ref">ebsp_message()</span></a> outputs a debug message by sending it to shared memory So that the host processor can output it to the terminal The attributes in this definition make sure that the compiler checks the arguments for errors. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">format</span></code>: The formatting string in printf style</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -318,7 +442,7 @@ $00: Hello World from processor 0 / 16
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015-2017, Coduin.
-      Last updated on Jun 15, 2018.
+      Last updated on Jun 16, 2018.
 
     </p>
   </div> 

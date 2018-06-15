@@ -288,13 +288,13 @@ If one does not want to hardcode addresses, <strong>section labels</strong> can 
 </pre></div>
 </div>
 <p>If one wants to read or write to another core’s memory, the ESDK functions <code class="docutils literal notranslate"><span class="pre">e_read</span></code> and <code class="docutils literal notranslate"><span class="pre">e_write</span></code> can be used, which will compute the correct address (of the form <code class="docutils literal notranslate"><span class="pre">0x???00000</span> <span class="pre">+</span> <span class="pre">offset</span></code>) and memcpy the data.
-Alternatively one can use <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code> to get a direct pointer to the data on the remote core.</p>
+Alternatively one can use <a class="reference internal" href="memory_management.html#_CPPv323ebsp_get_direct_addressiPKv" title="ebsp_get_direct_address"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code></a> to get a direct pointer to the data on the remote core.</p>
 </div>
 <div class="section" id="dma-engine">
 <h3>DMA Engine<a class="headerlink" href="#dma-engine" title="Permalink to this headline">¶</a></h3>
 <p>Each Epiphany processor contains a <em>DMA engine</em> which can be used to transfer data.
 The advantage of the DMA engine over normal memory access is that the DMA engine is <strong>faster</strong> and can transfer data <strong>while the CPU does other things</strong>. There are <strong>two DMA channels</strong>, meaning that two pairs of source/destination addresses can be set and the CPU can continue while the DMA engine is transfering data. This source and destination addresses can even <em>both be pointing at other cores’ internal memory</em>.
-To use the DMA engine one can use the <code class="docutils literal notranslate"><span class="pre">e_dma_xxx</span></code> functions from the ESDK. When writing EBSP programs you should prefer <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> to let the EBSP system manage the DMA engine.</p>
+To use the DMA engine one can use the <code class="docutils literal notranslate"><span class="pre">e_dma_xxx</span></code> functions from the ESDK. When writing EBSP programs you should prefer <a class="reference internal" href="memory_management.html#_CPPv313ebsp_dma_pushP15ebsp_dma_handlePvPKv6size_t" title="ebsp_dma_push"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code></a> to let the EBSP system manage the DMA engine.</p>
 </div>
 <div class="section" id="accessing-the-memory-directly-from-the-arm-processor">
 <h3>Accessing the memory directly from the ARM processor<a class="headerlink" href="#accessing-the-memory-directly-from-the-arm-processor" title="Permalink to this headline">¶</a></h3>
@@ -352,7 +352,7 @@ The <code class="docutils literal notranslate"><span class="pre">offset</span></
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015-2017, Coduin.
-      Last updated on Jun 15, 2018.
+      Last updated on Jun 16, 2018.
 
     </p>
   </div> 

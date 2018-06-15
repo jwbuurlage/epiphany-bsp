@@ -244,29 +244,91 @@
 <h2>Interface (Timer and callback)<a class="headerlink" href="#interface-timer-and-callback" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="host">
 <h3>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv322ebsp_set_sync_callbackPFvvE">
+<span id="_CPPv222ebsp_set_sync_callbackPFvvE"></span><span class="target" id="host__bsp_8h_1ad542fb7eba809cad18949b672708545b"></span>void <code class="descname">ebsp_set_sync_callback</code><span class="sig-paren">(</span>void (*<em>cb</em>)<span class="sig-paren">(</span><span class="sig-paren">)</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the (optional) callback for synchronizing epiphany cores with the host program. </p>
+<p><p>This callback is called when all Epiphany cores have called ebsp_host_sync(). Note that this does not happen at bsp_sync(). </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">cb</span></code>: A function pointer to the callback function</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv321ebsp_set_end_callbackPFvvE">
+<span id="_CPPv221ebsp_set_end_callbackPFvvE"></span><span class="target" id="host__bsp_8h_1a96ce8db901942447741ee8d2ace5d161"></span>void <code class="descname">ebsp_set_end_callback</code><span class="sig-paren">(</span>void (*<em>cb</em>)<span class="sig-paren">(</span><span class="sig-paren">)</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the (optional) callback for finalizing. </p>
+<p><p>This callback is called when </p>
+<a class="reference internal" href="basic.html#host__bsp_8h_1a12385c882b6096484952fe7acad958bd"><span class="std std-ref">ebsp_spmd()</span></a> finishes. It is primarily used by the ebsp memory inspector and should not be needed. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">cb</span></code>: A function pointer to the callback function</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="epiphany">
 <h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning" id="ebsp-raw-time">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv38bsp_timev">
+<span id="_CPPv28bsp_timev"></span><span id="bsp_time"></span><span class="target" id="e__bsp_8h_1a6ee4e522d55605dc51db6ea33c06c3c2"></span>float <code class="descname">bsp_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the time in seconds since <a class="reference internal" href="basic.html#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a> was called. </p>
+<p><p>The native Epiphany timer does not support time differences longer than </p>
+<code class="docutils literal notranslate"><span class="pre">UINT_MAX/(600000000)</span></code> which is roughly 7 seconds.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A floating point value with the number of elapsed seconds since the call to <a class="reference internal" href="basic.html#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a></dd>
+</dl>
+</p>
+<p>If you want to measure longer time intervals, we suggest you use the (less accurate) <a class="reference internal" href="#e__bsp_8h_1aeb45a09e9b589b1fdc7ede2f84d612db"><span class="std std-ref">ebsp_host_time()</span></a>.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Using this in combination with <a class="reference internal" href="#e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"><span class="std std-ref">ebsp_raw_time()</span></a> leads to unspecified behaviour, you should only use one of these in your program.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>This uses the internal Epiphany <code class="docutils literal notranslate"><span class="pre">E_CTIMER_0</span></code> timer so the second timer can be used for other purposes. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<span class="target" id="ebsp-raw-time"></span><dl class="function">
+<dt id="_CPPv313ebsp_raw_timev">
+<span id="_CPPv213ebsp_raw_timev"></span><span id="ebsp_raw_time"></span><span class="target" id="e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"></span>unsigned int <code class="descname">ebsp_raw_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the number of clockcycles that have passed since the previous call to <a class="reference internal" href="#e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"><span class="std std-ref">ebsp_raw_time()</span></a>. </p>
+<p><p>This function has less overhead than bsp_time.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>An unsigned integer with the number of clockcycles</dd>
+</dl>
+</p>
+<p>Divide the number of clockcycles by 600 000 000 to get the time in seconds.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Using this in combination with <a class="reference internal" href="#e__bsp_8h_1a6ee4e522d55605dc51db6ea33c06c3c2"><span class="std std-ref">bsp_time()</span></a> leads to unspecified behaviour, you should only use one of these in your program.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>This uses the internal Epiphany <code class="docutils literal notranslate"><span class="pre">E_CTIMER_0</span></code> timer so the second timer can be used for other purposes. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv314ebsp_host_timev">
+<span id="_CPPv214ebsp_host_timev"></span><span id="ebsp_host_time"></span><span class="target" id="e__bsp_8h_1aeb45a09e9b589b1fdc7ede2f84d612db"></span>float <code class="descname">ebsp_host_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the time in seconds since <a class="reference internal" href="basic.html#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a> was called. </p>
+<p><p>This function uses the system clock of the host to obtain the elapsed time. Because of varying amounts of latency this can be very inaccurate (its precision is in the order of milliseconds), but it supports time intervals of arbitrary length. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A floating point value with the number of seconds since <a class="reference internal" href="basic.html#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a></dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -292,7 +354,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015-2017, Coduin.
-      Last updated on Jun 15, 2018.
+      Last updated on Jun 16, 2018.
 
     </p>
   </div> 

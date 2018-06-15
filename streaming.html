@@ -275,33 +275,194 @@
 <h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="host">
 <h3>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv317bsp_stream_createiiPKv">
+<span id="_CPPv217bsp_stream_createiiPKv"></span><span id="bsp_stream_create__i.i.voidCP"></span><span class="target" id="host__bsp_8h_1ae7db595dbbbfde687bc1a208e419a7d8"></span>void *<code class="descname">bsp_stream_create</code><span class="sig-paren">(</span>int <em>stream_size</em>, int <em>token_size</em>, <em class="property">const</em> void *<em>initial_data</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Creates a generic stream for streaming data to or from an Epiphany core. </p>
+<p><p>The function returns NULL on failure.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A pointer to a section of external memory storing the tokens.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream_size</span></code>: The total number of bytes of data in the stream. </li>
+<li><code class="docutils literal notranslate"><span class="pre">token_size</span></code>: The size in bytes of a single token. Must be at least 16. </li>
+<li><code class="docutils literal notranslate"><span class="pre">initial_data</span></code>: (Optional) The data which should be streamed to an Epiphany core. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">initial_data</span></code> is nonzero, it is copied to the stream (<code class="docutils literal notranslate"><span class="pre">stream_size</span></code> bytes). If <code class="docutils literal notranslate"><span class="pre">initial_data</span></code> is zero, an empty stream of size <code class="docutils literal notranslate"><span class="pre">stream_size</span></code> is created. In this case, <code class="docutils literal notranslate"><span class="pre">stream_size</span></code> should be the maximum number of bytes that will be sent up from the Epiphany cores to the host.</p>
+<p>This function prints an error if <code class="docutils literal notranslate"><span class="pre">token_size</span></code> is less than 16.</p>
+<p>The format of the data pointed to by the return value is as follows: Before every token, there are two integers that specify the size of the preceding token and the size of the token itself.</p>
+<p>00000000, nextsize, data, prevsize, nextsize, data, … prevsize, nextsize, data, prevsize, 00000000</p>
+<p>So a header consists of two integers (8 byte total). The two sizes do NOT include these headers. They are only the size of the data inbetween.</p>
+<p>If you want to use the returned pointer directly you have to manually take care of this data format.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>If <code class="docutils literal notranslate"><span class="pre">initial_data</span></code> is nonzero, the data is copied so that after the call it can safely be freed or overwritten by the user. </dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="epiphany">
 <h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+<dl class="function">
+<dt id="_CPPv315bsp_stream_openP11ebsp_streami">
+<span id="_CPPv215bsp_stream_openP11ebsp_streami"></span><span id="bsp_stream_open__ebsp_streamP.i"></span><span class="target" id="e__bsp_8h_1a4afd821ffa428a5c21e4db004e2d2f2f"></span>int <code class="descname">bsp_stream_open</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, int <em>stream_id</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Open a stream that was created using <code class="docutils literal notranslate"><span class="pre">bsp_stream_create</span></code> on the host. </p>
+<p><p>The first stream created by the host will have </p>
+<code class="docutils literal notranslate"><span class="pre">stream_id</span></code> 0.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>Nonzero if succesful.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: Pointer to an existing <code class="docutils literal notranslate"><span class="pre">bsp_stream</span></code> struct to hold the stream data. This struct can be allocated on the stack by the user. </li>
+<li><code class="docutils literal notranslate"><span class="pre">stream_id</span></code>: The index of the stream. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Usage example: <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>bsp_stream mystream;
+if( bsp_stream_open(&amp;mystream, 3) ) {
+    // Get some data
+    void* buffer = 0;
+    bsp_stream_move_down(&amp;mystream, &amp;buffer, 0);
+    // The data is now in buffer
+    // Finally, close the stream
+    bsp_stream_close(&amp;mystream);`
+}
+</pre></div>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>This function has to be called <em>before</em> performing any other operation on the stream. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>A call to the function should always match a single call to <code class="docutils literal notranslate"><span class="pre">bsp_stream_close</span></code>. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv316bsp_stream_closeP11ebsp_stream">
+<span id="_CPPv216bsp_stream_closeP11ebsp_stream"></span><span id="bsp_stream_close__ebsp_streamP"></span><span class="target" id="e__bsp_8h_1acab67dc209d2b6fba1650292b97f73ff"></span>void <code class="descname">bsp_stream_close</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Wait for pending transfers to complete and close a stream. </p>
+<p><p>Behaviour is undefined if </p>
+<code class="docutils literal notranslate"><span class="pre">stream</span></code> is not a handle opened by <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream, opened by <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Cleans up the stream, and frees any buffers that may have been used by the stream. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv318bsp_stream_move_upP11ebsp_streamPKvii">
+<span id="_CPPv218bsp_stream_move_upP11ebsp_streamPKvii"></span><span id="bsp_stream_move_up__ebsp_streamP.voidCP.i.i"></span><span class="target" id="e__bsp_8h_1a4678a61cc1a9eae55c55d890046410ce"></span>int <code class="descname">bsp_stream_move_up</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, <em class="property">const</em> void *<em>data</em>, int <em>data_size</em>, int <em>wait_for_completion</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Write a local token up to a stream. </p>
+<p><p>The function </p>
+<em>always</em> waits for the previous token to have finished.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>Number of bytes written. Zero if an error has occurred.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">data</span></code>: The data to be sent up the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">data_size</span></code>: The size of the data to be sent, i.e. the size of the token. Behaviour is undefined if it is not a multiple of 8. If it is not a multiple of 8 bytes then transfers will be slow. </li>
+<li><code class="docutils literal notranslate"><span class="pre">wait_for_completion</span></code>: If nonzero this function blocks untill the data is completely written to the stream. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">wait_for_completion</span></code> is nonzero, this function will wait untill the data is transferred. This corresponds to single buffering.</p>
+<p>Alternativly, double buffering can be used as follows. Set <code class="docutils literal notranslate"><span class="pre">wait_for_completion</span></code> to zero and continue constructing the next token in a different buffer. Usage example: <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">*</span> <span class="n">buf1</span> <span class="o">=</span> <span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="kt">int</span><span class="o">*</span> <span class="n">buf2</span> <span class="o">=</span> <span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="kt">int</span><span class="o">*</span> <span class="n">curbuf</span> <span class="o">=</span> <span class="n">buf1</span><span class="p">;</span>
+<span class="kt">int</span><span class="o">*</span> <span class="n">otherbuf</span> <span class="o">=</span> <span class="n">buf2</span><span class="p">;</span>
+
+<span class="n">ebsp_stream</span> <span class="n">s</span><span class="p">;</span>
+<span class="n">bsp_stream_open</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// open stream 0</span>
+<span class="k">while</span> <span class="p">(...)</span> <span class="p">{</span>
+    <span class="c1">// Fill curbuf</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">curbuf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    
+    <span class="c1">// Send up</span>
+    <span class="n">bsp_stream_move_up</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="n">curbuf</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="c1">// Use other buffer</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">curbuf</span><span class="p">,</span> <span class="n">otherbuf</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">ebsp_free</span><span class="p">(</span><span class="n">buf1</span><span class="p">);</span>
+<span class="n">ebsp_free</span><span class="p">(</span><span class="n">buf2</span><span class="p">);</span>
+</pre></div>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Behaviour is undefined if the stream was not opened using <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>Memory is transferred using the <code class="docutils literal notranslate"><span class="pre">DMA1</span></code> engine. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv320bsp_stream_move_downP11ebsp_streamPPvi">
+<span id="_CPPv220bsp_stream_move_downP11ebsp_streamPPvi"></span><span id="bsp_stream_move_down__ebsp_streamP.voidPP.i"></span><span class="target" id="e__bsp_8h_1aa23b8ef4ae753261dea1a7c17c8734d1"></span>int <code class="descname">bsp_stream_move_down</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, void **<em>buffer</em>, int <em>preload</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the next token from a stream. </p>
+<p><p>When calling this function, the token that was obtained at the previous call will be overwritten.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>Number of bytes of the obtained chunk. If stream has finished or an error has occurred this function will return <code class="docutils literal notranslate"><span class="pre">0</span></code>.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">buffer</span></code>: Receives a pointer to a local copy of the next token. </li>
+<li><code class="docutils literal notranslate"><span class="pre">preload</span></code>: If this parameter is nonzero then the BSP system will preload the next token asynchroneously (double buffering). </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Behaviour is undefined if the stream was not opened using <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>Memory is transferred using the <code class="docutils literal notranslate"><span class="pre">DMA1</span></code> engine. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>When using double buffering, the BSP system will allocate memory for the next chunk, and will start writing to it using the DMA engine while the current chunk is processed. This requires more (local) memory, but can greatly increase the overall speed. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv315bsp_stream_seekP11ebsp_streami">
+<span id="_CPPv215bsp_stream_seekP11ebsp_streami"></span><span id="bsp_stream_seek__ebsp_streamP.i"></span><span class="target" id="e__bsp_8h_1aac6a2e9041be25b8903b6bb7c564186e"></span>void <code class="descname">bsp_stream_seek</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, int <em>delta_tokens</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Move the cursor in the stream, to change the next token to be obtained. </p>
+<p><p>If </p>
+<code class="docutils literal notranslate"><span class="pre">delta_tokens</span></code> is out of bounds, then the cursor will be moved to the start or end of the stream respectively. <code class="docutils literal notranslate"><span class="pre">bsp_stream_seek(i,</span> <span class="pre">INT_MIN)</span></code> will set the cursor to the start <code class="docutils literal notranslate"><span class="pre">bsp_stream_seek(i,</span> <span class="pre">INT_MAX)</span></code> will set the cursor to the end of the stream<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">delta_tokens</span></code>: The number of tokens to skip if <code class="docutils literal notranslate"><span class="pre">delta_tokens</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, or to go back if <code class="docutils literal notranslate"><span class="pre">delta_tokens</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Note that if <code class="docutils literal notranslate"><span class="pre">bsp_stream_move_down</span></code> is used with <code class="docutils literal notranslate"><span class="pre">preload</span></code> enabled (meaning the last call to that function had <code class="docutils literal notranslate"><span class="pre">preload</span></code> enabled), then calling <code class="docutils literal notranslate"><span class="pre">ebsp_stream_seek</span></code> will discard any token that was preloaded in memory, so the first call to <code class="docutils literal notranslate"><span class="pre">ebsp_stream_move_down</span></code> after this will yield a token from the new position.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>This function provides a mechanism through which chunks can be obtained multiple times. It gives you random access in the memory in the data stream. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>This function has <code class="docutils literal notranslate"><span class="pre">O(delta_tokens)</span></code> complexity. </dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -327,7 +488,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015-2017, Coduin.
-      Last updated on Jun 15, 2018.
+      Last updated on Jun 16, 2018.
 
     </p>
   </div> 

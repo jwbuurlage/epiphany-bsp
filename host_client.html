@@ -294,37 +294,146 @@ payload: 2002, tag: 2
 <h2>Interface (Vertical communication)<a class="headerlink" href="#interface-vertical-communication" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="host">
 <h3>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv310ebsp_qsizePiPi">
+<span id="_CPPv210ebsp_qsizePiPi"></span><span id="ebsp_qsize__iP.iP"></span><span class="target" id="host__bsp_8h_1a0dc8a00e88a2ecb254bde2ec8665159e"></span>void <code class="descname">ebsp_qsize</code><span class="sig-paren">(</span>int *<em>packets</em>, int *<em>accum_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Get the amount of messages in the queue and their total size in bytes. </p>
+<p><p>Use only for gathering result messages at the end of a BSP program. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">packets</span></code>: A pointer to an integer receiving the number of messages </li>
+<li><code class="docutils literal notranslate"><span class="pre">accum_bytes</span></code>: The total size of the data payloads of the messages, in bytes.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv316ebsp_set_tagsizePi">
+<span id="_CPPv216ebsp_set_tagsizePi"></span><span id="ebsp_set_tagsize__iP"></span><span class="target" id="host__bsp_8h_1a27bb2cce1a92dbf95ab28ea662216370"></span>void <code class="descname">ebsp_set_tagsize</code><span class="sig-paren">(</span>int *<em>tag_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set initial tagsize for message passing. </p>
+<p><p>The default tagsize is zero. This function should be called at most once, before any messages are sent. Calling this when receiving messages results in undefined behaviour.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_bytes</span></code>: A pointer to an integer containing the new tagsize, receiving the old tagsize on return.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>It is not possible to send messages with different tag sizes. Doing so will result in undefined behaviour.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The tagsize set using this function is also used for inter-core messages. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv316ebsp_get_tagsizev">
+<span id="_CPPv216ebsp_get_tagsizev"></span><span id="ebsp_get_tagsize"></span><span class="target" id="host__bsp_8h_1a47cf6f4bc4ee48eddc146f52d7eb8f95"></span>int <code class="descname">ebsp_get_tagsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Get the tagsize as set by the Epiphany program. </p>
+<p><p>Use only for gathering result messages at the end of a BSP program.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The tagsize in bytes</dd>
+</dl>
+</p>
+<p>When <a class="reference internal" href="basic.html#host__bsp_8h_1a12385c882b6096484952fe7acad958bd"><span class="std std-ref">ebsp_spmd()</span></a> returns, the Epiphany program can have set a different tagsize which can be obtained using this function. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv314ebsp_send_downiPKvPKvi">
+<span id="_CPPv214ebsp_send_downiPKvPKvi"></span><span id="ebsp_send_down__i.voidCP.voidCP.i"></span><span class="target" id="host__bsp_8h_1ae51209685120c4965c41b2056fee1872"></span>void <code class="descname">ebsp_send_down</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Send a message to the Epiphany cores. </p>
+<p><p>This is the preferred way to send initial data (for computation) to the Epiphany cores.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the message tag </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the payload in bytes</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>The size of the buffer pointed to by tag has to be <code class="docutils literal notranslate"><span class="pre">tagsize</span></code>, and must be the same for every message being sent. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv310ebsp_writeiPv5off_ti">
+<span id="_CPPv210ebsp_writeiPv5off_ti"></span><span id="ebsp_write__i.voidP.off_t.i"></span><span class="target" id="host__bsp_8h_1a00f9d9253d6ffa496ee041955689c99a"></span>int <code class="descname">ebsp_write</code><span class="sig-paren">(</span>int <em>pid</em>, void *<em>src</em>, off_t <em>dst</em>, int <em>size</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Write data to the Epiphany processor. </p>
+<p><p>This is an alternative to the BSP Message Passing system. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: A pointer to the source data </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: The destination address (as seen by the Epiphany core) </li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: The amount of bytes to be copied </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv39ebsp_readi5off_tPvi">
+<span id="_CPPv29ebsp_readi5off_tPvi"></span><span id="ebsp_read__i.off_t.voidP.i"></span><span class="target" id="host__bsp_8h_1a65423fcb58e7d782c3914a8689dc527f"></span>int <code class="descname">ebsp_read</code><span class="sig-paren">(</span>int <em>pid</em>, off_t <em>src</em>, void *<em>dst</em>, int <em>size</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Read data from the Epiphany processor. </p>
+<p><p>This is an alternative to the BSP Message Passing system. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the source processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: The source address (as seen by the Epiphany core) </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: A pointer to a buffer receiving the data </li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: The amount of bytes to be copied </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="epiphany">
 <h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv312ebsp_send_upPKvPKvi">
+<span id="_CPPv212ebsp_send_upPKvPKvi"></span><span id="ebsp_send_up__voidCP.voidCP.i"></span><span class="target" id="e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"></span>void <code class="descname">ebsp_send_up</code><span class="sig-paren">(</span><em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv312ebsp_send_upPKvPKvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Send a message to the host processor after the computation is finished. </p>
+<p><p>This will send a message back to the host after a computation. It is used to tranfer any results.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the tag data </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the data</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>When this function returns, the data has been copied so the user can use the buffer for other purposes.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd><ul class="simple">
+<li><a class="reference internal" href="#e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"><span class="std std-ref">ebsp_send_up()</span></a> should an only be used between the last call to <a class="reference internal" href="variables.html#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a> and <a class="reference internal" href="basic.html#e__bsp_8h_1ad794334e180b711537499871020a76fe"><span class="std std-ref">bsp_end()</span></a></li>
+<li><a class="reference internal" href="#e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"><span class="std std-ref">ebsp_send_up()</span></a> should only be used when no <a class="reference internal" href="mp.html#e__bsp_8h_1a2d79a679686a5357acc6ba936ec60017"><span class="std std-ref">bsp_send()</span></a> messages have been passed after the last <a class="reference internal" href="variables.html#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a></li>
+<li>after calling <a class="reference internal" href="#e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"><span class="std std-ref">ebsp_send_up()</span></a> at least once, a call to any other queue functions or to <a class="reference internal" href="variables.html#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a> will lead to undefined behaviour </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -350,7 +459,7 @@ payload: 2002, tag: 2
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015-2017, Coduin.
-      Last updated on Jun 15, 2018.
+      Last updated on Jun 16, 2018.
 
     </p>
   </div> 
