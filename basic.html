@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting started: The Basics &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BSP Variables" href="variables.html" />
+    <link rel="prev" title="Introduction and Setting up" href="introduction.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction and Setting up</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started: The Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hello-world">Hello World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-basics">Interface (Basics)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#host">Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#epiphany">Epiphany</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="variables.html">BSP Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mp.html">Message Passing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="host_client.html">Communicating with the Epiphany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streaming.html">Data streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_features.html">Other features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory_management.html">Memory Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="memory_details.html">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bsp.html">BSP Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting started: The Basics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/basic.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started-the-basics">
+<h1>Getting started: The Basics<a class="headerlink" href="#getting-started-the-basics" title="Permalink to this headline">¶</a></h1>
+<p>EBSP programs are written in <em>SPMD</em> (single-program multiple-data) style. This means that each core runs the same code, but obtains different data. Later we will see how we can transfer data to and from the Epiphany cores, but for now our first step will be to get the cores to output their designated core number (called <code class="docutils literal notranslate"><span class="pre">pid</span></code> for <em>processor identifier</em>). Like all programs written for the Parallella, an EBSP program consists of two parts. One part contains the code that runs on the <em>host processor</em>, the ARM chip that hosts the Linux OS. The other part contains the code that runs on each Epiphany core. In heterogeneous computing it is common to call this second part the <em>kernel</em>.</p>
+<div class="section" id="hello-world">
+<h2>Hello World!<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
+<p>A host program consists of at least four EBSP functions, which are generally used as in the following example::</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// file: host_code.c</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;host_bsp.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bsp_init</span><span class="p">(</span><span class="s">&quot;ecore_program.srec&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">bsp_begin</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+    <span class="n">ebsp_spmd</span><span class="p">();</span>
+    <span class="n">bsp_end</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The first call to <code class="docutils literal notranslate"><span class="pre">bsp_init</span></code> initializes the EBSP library. The first argument is the filename of the (compiled) kernel program, and the second and third arguments are the program arguments. Next we tell the EBSP system how many cores we would like to use (in this case; all 16 cores for a standard Parallella board) by calling <code class="docutils literal notranslate"><span class="pre">bsp_begin</span></code> passing <code class="docutils literal notranslate"><span class="pre">16</span></code> as its first argument. The call to <code class="docutils literal notranslate"><span class="pre">ebsp_spmd</span></code> starts the execution of the kernel program on the 16 cores. When the execution has finished we finalize the EBSP system by calling <code class="docutils literal notranslate"><span class="pre">bsp_end</span></code> without arguments.</p>
+<p>Next we write the kernel for our Hello World program. Besides outputting “Hello World” we also show the processor number. The code looks like this::</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// file: ecore_code.c</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;e_bsp.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">bsp_begin</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bsp_pid</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
+    <span class="n">ebsp_message</span><span class="p">(</span><span class="s">&quot;Hello World from processor %d / %d&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span>
+    <span class="n">bsp_end</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Let us also go over the kernel code line by line. First we initialize the EBSP system on the core, by calling <code class="docutils literal notranslate"><span class="pre">bsp_begin</span></code>. In a kernel program this call does not require any arguments, since there is no additional program to run! Next we obtain information about our own designated processor number (commonly called <code class="docutils literal notranslate"><span class="pre">s</span></code>) using <code class="docutils literal notranslate"><span class="pre">bsp_pid</span></code>, and the total number of processors (commonly called <code class="docutils literal notranslate"><span class="pre">p</span></code>) by calling <code class="docutils literal notranslate"><span class="pre">bsp_nprocs</span></code>. We then output a message to host using <code class="docutils literal notranslate"><span class="pre">ebsp_message</span></code>. This function can be used completely identically to <code class="docutils literal notranslate"><span class="pre">printf</span></code> in ordinary C programs. Again we finalize the system with a call to <code class="docutils literal notranslate"><span class="pre">bsp_end</span></code> which cleans up the EBSP system.</p>
+<p>You may have noticed that some EBSP functions, which we will refer to as <em>primitives</em>, are prefixed with <code class="docutils literal notranslate"><span class="pre">bsp_</span></code> while others are prefixed by <code class="docutils literal notranslate"><span class="pre">ebsp_</span></code>. This is because the EBSP library introduces some functions that are not in the <a class="reference external" href="http://www.bsp-worldwide.org/">BSPlib standard</a> but that can be very helpful when programming for the Epiphany.</p>
+<p>Running this program should result in output similar to the following::</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>$08: Hello World from processor 8 / 16
+$01: Hello World from processor 1 / 16
+$07: Hello World from processor 7 / 16
+$02: Hello World from processor 2 / 16
+$15: Hello World from processor 15 / 16
+$03: Hello World from processor 3 / 16
+$10: Hello World from processor 10 / 16
+$06: Hello World from processor 6 / 16
+$12: Hello World from processor 12 / 16
+$13: Hello World from processor 13 / 16
+$05: Hello World from processor 5 / 16
+$04: Hello World from processor 4 / 16
+$11: Hello World from processor 11 / 16
+$14: Hello World from processor 14 / 16
+$09: Hello World from processor 9 / 16
+$00: Hello World from processor 0 / 16
+</pre></div>
+</div>
+<p>The output has the form <code class="docutils literal notranslate"><span class="pre">$[pid]:</span> <span class="pre">output</span></code>. As we see, indeed the EBSP kernel is being run on every core! Note that there are no guarantees about which core gets to the <code class="docutils literal notranslate"><span class="pre">ebsp_message</span></code> statement first, and therefore the output need not be in order of processor number.</p>
+</div>
+<div class="section" id="interface-basics">
+<h2>Interface (Basics)<a class="headerlink" href="#interface-basics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="host">
+<h3>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="epiphany">
+<h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="variables.html" class="btn btn-neutral float-right" title="BSP Variables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral" title="Introduction and Setting up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

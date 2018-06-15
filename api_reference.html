@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Reference &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="BSP Model" href="bsp.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction and Setting up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Getting started: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variables.html">BSP Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mp.html">Message Passing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="host_client.html">Communicating with the Epiphany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streaming.html">Data streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_features.html">Other features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory_management.html">Memory Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="memory_details.html">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bsp.html">BSP Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#host">Host</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-init">bsp_init</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-spmd">ebsp_spmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-begin">bsp_begin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-end">bsp_end</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-nprocs">bsp_nprocs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-set-tagsize">ebsp_set_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-send-down">ebsp_send_down</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-get-tagsize">ebsp_get_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-qsize">ebsp_qsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-get-tag">ebsp_get_tag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-move">ebsp_move</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-hpmove">ebsp_hpmove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-create">bsp_stream_create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-write">ebsp_write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-read">ebsp_read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-set-sync-callback">ebsp_set_sync_callback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-set-end-callback">ebsp_set_end_callback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#epiphany">Epiphany</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">bsp_begin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">bsp_end</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">bsp_nprocs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-pid">bsp_pid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-time">bsp_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-host-time">ebsp_host_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-raw-time">ebsp_raw_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-sync">bsp_sync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-barrier">ebsp_barrier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-push-reg">bsp_push_reg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-pop-reg">bsp_pop_reg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-put">bsp_put</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-get">bsp_get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-hpput">bsp_hpput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-hpget">bsp_hpget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-set-tagsize">bsp_set_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">ebsp_get_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-send">bsp_send</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-qsize">bsp_qsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-get-tag">bsp_get_tag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-move">bsp_move</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-hpmove">bsp_hpmove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-open">bsp_stream_open</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-close">bsp_stream_close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-move-up">bsp_stream_move_up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-move-down">bsp_stream_move_down</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-seek">bsp_stream_seek</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api_reference.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<p>On this page we give a complete overview of all the primitives we expose in the main EBSP library.</p>
+<div class="section" id="host">
+<h2>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bsp-init">
+<h3>bsp_init<a class="headerlink" href="#bsp-init" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-spmd">
+<h3>ebsp_spmd<a class="headerlink" href="#ebsp-spmd" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-begin">
+<h3>bsp_begin<a class="headerlink" href="#bsp-begin" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-end">
+<h3>bsp_end<a class="headerlink" href="#bsp-end" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-nprocs">
+<h3>bsp_nprocs<a class="headerlink" href="#bsp-nprocs" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-set-tagsize">
+<h3>ebsp_set_tagsize<a class="headerlink" href="#ebsp-set-tagsize" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-send-down">
+<h3>ebsp_send_down<a class="headerlink" href="#ebsp-send-down" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-get-tagsize">
+<h3>ebsp_get_tagsize<a class="headerlink" href="#ebsp-get-tagsize" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-qsize">
+<h3>ebsp_qsize<a class="headerlink" href="#ebsp-qsize" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-get-tag">
+<h3>ebsp_get_tag<a class="headerlink" href="#ebsp-get-tag" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-move">
+<h3>ebsp_move<a class="headerlink" href="#ebsp-move" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-hpmove">
+<h3>ebsp_hpmove<a class="headerlink" href="#ebsp-hpmove" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-stream-create">
+<h3>bsp_stream_create<a class="headerlink" href="#bsp-stream-create" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-write">
+<h3>ebsp_write<a class="headerlink" href="#ebsp-write" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-read">
+<h3>ebsp_read<a class="headerlink" href="#ebsp-read" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-set-sync-callback">
+<h3>ebsp_set_sync_callback<a class="headerlink" href="#ebsp-set-sync-callback" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-set-end-callback">
+<h3>ebsp_set_end_callback<a class="headerlink" href="#ebsp-set-end-callback" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_host/index.xml</p>
+</div>
+</div>
+</div>
+<div class="section" id="epiphany">
+<h2>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>bsp_begin<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>bsp_end<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>bsp_nprocs<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-pid">
+<h3>bsp_pid<a class="headerlink" href="#bsp-pid" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-time">
+<h3>bsp_time<a class="headerlink" href="#bsp-time" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-host-time">
+<h3>ebsp_host_time<a class="headerlink" href="#ebsp-host-time" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-raw-time">
+<h3>ebsp_raw_time<a class="headerlink" href="#ebsp-raw-time" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-sync">
+<h3>bsp_sync<a class="headerlink" href="#bsp-sync" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="ebsp-barrier">
+<h3>ebsp_barrier<a class="headerlink" href="#ebsp-barrier" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-push-reg">
+<h3>bsp_push_reg<a class="headerlink" href="#bsp-push-reg" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-pop-reg">
+<h3>bsp_pop_reg<a class="headerlink" href="#bsp-pop-reg" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-put">
+<h3>bsp_put<a class="headerlink" href="#bsp-put" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-get">
+<h3>bsp_get<a class="headerlink" href="#bsp-get" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-hpput">
+<h3>bsp_hpput<a class="headerlink" href="#bsp-hpput" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-hpget">
+<h3>bsp_hpget<a class="headerlink" href="#bsp-hpget" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-set-tagsize">
+<h3>bsp_set_tagsize<a class="headerlink" href="#bsp-set-tagsize" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>ebsp_get_tagsize<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-send">
+<h3>bsp_send<a class="headerlink" href="#bsp-send" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-qsize">
+<h3>bsp_qsize<a class="headerlink" href="#bsp-qsize" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-get-tag">
+<h3>bsp_get_tag<a class="headerlink" href="#bsp-get-tag" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-move">
+<h3>bsp_move<a class="headerlink" href="#bsp-move" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-hpmove">
+<h3>bsp_hpmove<a class="headerlink" href="#bsp-hpmove" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-stream-open">
+<h3>bsp_stream_open<a class="headerlink" href="#bsp-stream-open" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-stream-close">
+<h3>bsp_stream_close<a class="headerlink" href="#bsp-stream-close" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-stream-move-up">
+<h3>bsp_stream_move_up<a class="headerlink" href="#bsp-stream-move-up" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-stream-move-down">
+<h3>bsp_stream_move_down<a class="headerlink" href="#bsp-stream-move-down" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+<div class="section" id="bsp-stream-seek">
+<h3>bsp_stream_seek<a class="headerlink" href="#bsp-stream-seek" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="bsp.html" class="btn btn-neutral" title="BSP Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

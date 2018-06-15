@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BSP Variables &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Message Passing" href="mp.html" />
+    <link rel="prev" title="Getting started: The Basics" href="basic.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction and Setting up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Getting started: The Basics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">BSP Variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#registering-putting-and-getting">Registering, putting and getting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#variable-registration">Variable registration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#putting-and-getting-values">Putting and getting values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unbuffered-communication">Unbuffered communication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-variables">Interface (Variables)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#epiphany">Epiphany</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp.html">Message Passing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="host_client.html">Communicating with the Epiphany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streaming.html">Data streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_features.html">Other features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory_management.html">Memory Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="memory_details.html">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bsp.html">BSP Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>BSP Variables</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/variables.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bsp-variables">
+<h1>BSP Variables<a class="headerlink" href="#bsp-variables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="registering-putting-and-getting">
+<h2>Registering, putting and getting<a class="headerlink" href="#registering-putting-and-getting" title="Permalink to this headline">¶</a></h2>
+<p>If we want to write more interesting EBSP programs, we need to have a way to communicate between the different Epiphany cores. In EBSP communication happens in one of two ways: using message passing, which we will introduce later, or via <em>registered variables</em>. An EBSP variable exists on every processor, but does not necessarily have the same size on every Epiphany core.</p>
+<div class="section" id="variable-registration">
+<h3>Variable registration<a class="headerlink" href="#variable-registration" title="Permalink to this headline">¶</a></h3>
+<p>We register a variable by calling <code class="docutils literal notranslate"><span class="pre">bsp_push_reg</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">bsp_push_reg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Here we declare an integer <code class="docutils literal notranslate"><span class="pre">a</span></code>, and initialize it with zero. Next we <em>register</em> the variable with the BSP system, by passing its local location, and its size.</p>
+<p>To ensure that all cores have registered a variable, we perform a barrier synchronisation after the registration. The Epiphany cores will halt execution until <em>every other core</em> reaches this point in the program, so it <em>synchronizes</em> the program execution between the Epiphany cores. Only <em>one variable may be declared between calls to</em> <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code>!</p>
+</div>
+<div class="section" id="putting-and-getting-values">
+<h3>Putting and getting values<a class="headerlink" href="#putting-and-getting-values" title="Permalink to this headline">¶</a></h3>
+<p>Registered variables can be written to or be read from by other cores. In BSP this is referred to as <em>putting</em> something in a variable, or <em>getting</em> the value of a variable. To write for example our processor ID to the <em>next core</em> we can write:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+<span class="n">bsp_put</span><span class="p">((</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Let us explain this code line by line. As in the <em>Hello World</em> example, here we define <code class="docutils literal notranslate"><span class="pre">s</span></code> and <code class="docutils literal notranslate"><span class="pre">p</span></code> to be the processor id and the number of processors respectively. In our call to <code class="docutils literal notranslate"><span class="pre">bsp_put</span></code> we pass the following arguments (in order):</p>
+<ol class="arabic simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">pid</span></code> of the target (i.e. the receiving) processor.</li>
+<li>A pointer to the source data that we want to copy to the target processor.</li>
+<li>A pointer representing a <em>registered variable</em>. Note that this pointer refers to the registered variable on the <em>sending</em> processor – the EBSP system can identify these processors such that it knows which <em>remote address</em> to write to.</li>
+<li>The offset (in bytes) from which we want to start writing at the target processor.</li>
+<li>The number of bytes to copy.</li>
+</ol>
+<p>Before we want to use a communicated value on the target processor, we need to again perform a barrier synchronisation by calling <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code>. This ensures that all the outstanding communication gets resolved. After the call to <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code> returns, we can use the result of <code class="docutils literal notranslate"><span class="pre">bsp_put</span></code> on the target processor. The code between two consecutive calls to <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code> is called a <em>superstep</em>.</p>
+<p>When we receive the data, we can for example write the result to the standard output. Below we give the complete program which makes use of <code class="docutils literal notranslate"><span class="pre">bsp_put</span></code> to communicate with another processor. Here, and in the remainder of this post we will only write the code in between the calls to <code class="docutils literal notranslate"><span class="pre">bsp_begin</span></code> and <code class="docutils literal notranslate"><span class="pre">bsp_end</span></code>, the other code is identical to the code in the <em>Hello World</em> example.:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bsp_pid</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">bsp_push_reg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+<span class="n">bsp_put</span><span class="p">((</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="n">ebsp_message</span><span class="p">(</span><span class="s">&quot;received: %i&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This results in the following output:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>$01: received: 0
+$02: received: 1
+$07: received: 6
+$00: received: 15
+...
+</pre></div>
+</div>
+<p>Where we have suppressed the output from the other cores. As we see we are correctly receiving the processor id of the previous cores!</p>
+<p>An alternative way of communication is <em>getting</em> the value of a registered variable from a remote core. The syntax is very similar:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">bsp_get</span><span class="p">((</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The arguments for <code class="docutils literal notranslate"><span class="pre">bsp_get</span></code> are:</p>
+<ol class="arabic simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">pid</span></code> of processor we want to <em>get</em> the value from.</li>
+<li>The pointer representing a registed variable.</li>
+<li>The offset (in bytes) at the remote processor from which we want to start reading.</li>
+<li>A pointer to the local destination.</li>
+<li>The number of bytes to copy.</li>
+</ol>
+<p>And again, we perform a barrier synchronisation to ensure the data has been transferred. If you are familiar with concurrent programming, then you might think we are at risk of a <a class="reference external" href="https://en.wikipedia.org/wiki/Race_condition">race condition</a>! What if processor <code class="docutils literal notranslate"><span class="pre">s</span></code> reaches the <code class="docutils literal notranslate"><span class="pre">bsp_get</span></code> statement before processor <code class="docutils literal notranslate"><span class="pre">(s</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">%</span> <span class="pre">p</span></code> has set the value for <code class="docutils literal notranslate"><span class="pre">a</span></code> equal to its process number? Do we then obtain zero? In this case, we do not have to worry – no data transfer is initialized until each core has reached <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code>. Indeed we receive the correct output:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>$01: received: 2
+$03: received: 4
+$11: received: 12
+$14: received: 15
+...
+</pre></div>
+</div>
+</div>
+<div class="section" id="unbuffered-communication">
+<h3>Unbuffered communication<a class="headerlink" href="#unbuffered-communication" title="Permalink to this headline">¶</a></h3>
+<p>So far we have discussed writing to, and reading from variables using <code class="docutils literal notranslate"><span class="pre">bsp_put</span></code> and <code class="docutils literal notranslate"><span class="pre">bsp_get</span></code>. These two functions are <em>buffered</em>. When calling <code class="docutils literal notranslate"><span class="pre">bsp_put</span></code> for example, the <em>current source value</em> at the time of the function call is guarenteed to be sent to the target processor, but it does not get sent until the next barrier synchronisation – so behind the scenes the EBSP library stores a copy of the data. The BSP standard was originally designed for distributed memory systems with very high latency, in which this design makes a lot of sense. On the Epiphany platform this gives a lot of unnecessary overhead since data is copied to <em>external memory</em>.</p>
+<p>This problem is not unique to the Epiphany platform however. Together with the <a class="reference external" href="http://www.multicorebsp.com/">MulticoreBSP</a> which targets modern multicore processors, two additional BSP primitives were introduced that provide <em>unbuffered</em> variable communication, <code class="docutils literal notranslate"><span class="pre">bsp_hpput</span></code> and <code class="docutils literal notranslate"><span class="pre">bsp_hpget</span></code>. Here the <code class="docutils literal notranslate"><span class="pre">hp...</span></code> prefix stands for <em>high performance</em>.</p>
+<p>However, although their function signatures are completely identical, these are not meant as a drop-in replacements for <code class="docutils literal notranslate"><span class="pre">bsp_put</span></code> and <code class="docutils literal notranslate"><span class="pre">bsp_get</span></code>. They are unsafe in the sense that data transfer happens <em>at once</em>. This means that when using these functions you should be aware of possible race conditions – which can notoriously lead to mistakes that can be very hard to debug.</p>
+<p>To facilitate writing code using only unbuffered communication we introduce a <code class="docutils literal notranslate"><span class="pre">ebsp_barrier</span></code> function that performs a barrier synchronisation without transferring any outstanding communication that has arisen from calls to <code class="docutils literal notranslate"><span class="pre">bsp_put</span></code> and <code class="docutils literal notranslate"><span class="pre">bsp_get</span></code>. Let us look at an example program using these unbuffered variants:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bsp_pid</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">bsp_push_reg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+<span class="c1">// barrier ensures b has been written to on each core</span>
+<span class="n">ebsp_barrier</span><span class="p">();</span>
+
+<span class="n">bsp_hpput</span><span class="p">((</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+
+<span class="c1">// barrier ensures data has been received</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+<span class="n">ebsp_message</span><span class="p">(</span><span class="s">&quot;received: %i&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When writing or reading large amounts of data in between different <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code> calls, the <code class="docutils literal notranslate"><span class="pre">hp...</span></code> functions are much more efficient in terms of local memory usage (which is very valuable because of the small size) as well as running speed. However, extra care is needed to effectively synchronize between threads. For example, if we remove either the <code class="docutils literal notranslate"><span class="pre">ebsp_barrier</span></code>, or the  <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code> calls in the previous example program, there will be a race condition.</p>
+<p>We test the program, and see that the output is indeed identical to before:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>$01: received: 0
+$08: received: 7
+$02: received: 1
+$10: received: 9
+...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="interface-variables">
+<h2>Interface (Variables)<a class="headerlink" href="#interface-variables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="epiphany">
+<h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mp.html" class="btn btn-neutral float-right" title="Message Passing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="basic.html" class="btn btn-neutral" title="Getting started: The Basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

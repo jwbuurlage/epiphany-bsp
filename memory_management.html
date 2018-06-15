@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Memory Management &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parallella Memory Details" href="memory_details.html" />
+    <link rel="prev" title="Output" href="output.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction and Setting up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Getting started: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variables.html">BSP Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mp.html">Message Passing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="host_client.html">Communicating with the Epiphany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streaming.html">Data streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_features.html">Other features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Memory Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-copying">Data copying</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#direct-memcpy">Direct memcpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dma-engine">DMA engine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memory-allocation">Memory allocation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#external-memory-dma-transfers">External memory DMA transfers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#core-to-core-dma-transfers">Core to core DMA transfers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interface">Interface</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="memory_details.html">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bsp.html">BSP Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Memory Management</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/memory_management.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="memory-management">
+<h1>Memory Management<a class="headerlink" href="#memory-management" title="Permalink to this headline">¶</a></h1>
+<p>Memory management on the Epiphany platform requires some special care so we discuss it in this separate section. The Epiphany cores have very little local (fast) memory, and access the external (larger) memory space is very slow. Therefore one needs to pay special attention to memory management in order to write good programs for the Epiphany platform.</p>
+<p>We provide some functions that aid in memory allocation. These are not part of the offical BSP standard, but meant as a utility library. This page will cover these helper functions. If you are interested in the more technical details (specific for the Parallella), see <a class="reference internal" href="memory_details.html#memory-details"><span class="std std-ref">Parallella memory details</span></a>.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In short, there are two types of memory:</p>
+<ul class="simple">
+<li>local memory: 32 KB for each core, fast</li>
+<li>external memory: 32 MB shared for all cores, slow</li>
+</ul>
+<p>In principle, all computations should be performed on data in the fast local memory. However 32 KB might not be enough for all your data. In this case you have to store the data in external memory and transfer the required parts to local memory to do the computations. Access to external memory can be a factor 100 slower in some cases so this should be avoided when possible.</p>
+<p>How do you know in what type of memory your data is stored? Let us look at the following example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">global_var</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">my_function</span><span class="p">(</span><span class="kt">int</span> <span class="n">argument</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">local_var</span><span class="p">;</span>
+    <span class="kt">void</span><span class="o">*</span> <span class="n">buffer1</span> <span class="o">=</span> <span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="kt">void</span><span class="o">*</span> <span class="n">buffer2</span> <span class="o">=</span> <span class="n">ebsp_ext_malloc</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+
+
+    <span class="c1">// ....</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">buffer1</span><span class="p">)</span> <span class="n">ebsp_free</span><span class="p">(</span><span class="n">buffer1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">buffer2</span><span class="p">)</span> <span class="n">ebsp_free</span><span class="p">(</span><span class="n">buffer2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example, the following variables will be stored in local memory:
+- <code class="docutils literal notranslate"><span class="pre">global_var</span></code>
+- <code class="docutils literal notranslate"><span class="pre">local_var</span></code>
+- <code class="docutils literal notranslate"><span class="pre">argument</span></code>
+- <code class="docutils literal notranslate"><span class="pre">buffer1</span></code>, as well as the data it points to
+- <code class="docutils literal notranslate"><span class="pre">my_function</span></code> (the machine code)
+However, <code class="docutils literal notranslate"><span class="pre">buffer2</span></code> points to data that is stored in the large <em>external memory</em>. The pointer itself is stored in local memory.</p>
+<p>In general, global and local variables in your C source code will be stored in local memory, unless otherwise specified with some special gcc attributes. Code itself (i.e. the machine code) can also be stored in both types of memory. Normal C code will be stored in local memory, unless specified using gcc attributes. Variables allocated using <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_ext_malloc()</span></code> are stored in external memory.</p>
+</div>
+<div class="section" id="data-copying">
+<h2>Data copying<a class="headerlink" href="#data-copying" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="direct-memcpy">
+<h3>Direct memcpy<a class="headerlink" href="#direct-memcpy" title="Permalink to this headline">¶</a></h3>
+<p>In C you can copy data using <code class="docutils literal notranslate"><span class="pre">memcpy(destination,</span> <span class="pre">source,</span> <span class="pre">nbytes)</span></code>. This function is available on the Epiphany as well, but its implementation (depending on the version of gcc and newlib) is not properly optimized for the Epiphany architecture. In particular the function itself is stored in external memory (unless you choose to save the complete C library in local memory) and it also does not perform 8-byte transfers. For this reason we have created <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_memcpy()</span></code> which is stored in local memory and does transfers utilizing 8-byte read/write instructions when possible. It is therefore faster than <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> and should be preferred.</p>
+</div>
+<div class="section" id="dma-engine">
+<h3>DMA engine<a class="headerlink" href="#dma-engine" title="Permalink to this headline">¶</a></h3>
+<p>Each Epiphany processor contains a so-called DMA engine which can be used to transfer data. This DMA engine can be viewed as a separate core that can copy data while the normal Epiphany core does other things. The Epiphany core can simply give the DMA engine a task (a source and destination address along with some other options) and the DMA engine will copy the data so that the Epiphany core can continue with other operations. The advantage of the DMA engine over normal memory access is that the DMA engine is <strong>faster</strong> and can transfer data <strong>while the CPU does other things</strong>. There are <strong>two DMA channels</strong>, meaning that two pairs of source/destination addresses can be set and the Epiphany core can continue while the DMA engine is transfering data.</p>
+<p>We have provided some utility functions to make the use of the DMA engine easier.  If you want to use the DMA engine using the <code class="docutils literal notranslate"><span class="pre">e_dma_xxx</span></code> functions from the ESDK you can do so, but only use <code class="docutils literal notranslate"><span class="pre">E_DMA_0</span></code>. The other DMA channel (<code class="docutils literal notranslate"><span class="pre">E_DMA_1</span></code>) is used internally by the library.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The DMA engine can not transfer data from the local core to itself (i.e. to another memory location in the same core). Either the source or destination (or both) should point to another core’s memory or to external memory.</p>
+</div>
+<p>The Epiphany BSP library provides the functions <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> and <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code>. They implement a queue of DMA tasks that are handled sequentially. With <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> you can push a task to this queue and with <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code> you can wait for the task to complete:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// A handle identifies the transfer task</span>
+<span class="n">ebsp_dma_handle</span> <span class="n">descriptor_1</span><span class="p">;</span>
+<span class="n">ebsp_dma_handle</span> <span class="n">descriptor_2</span><span class="p">;</span>
+
+<span class="c1">// Start two transfers</span>
+<span class="n">ebsp_dma_push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor_1</span><span class="p">,</span> <span class="n">destination_1</span><span class="p">,</span> <span class="n">source_1</span><span class="p">,</span> <span class="n">data_size_1</span><span class="p">);</span>
+<span class="n">ebsp_dma_push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor_2</span><span class="p">,</span> <span class="n">destination_2</span><span class="p">,</span> <span class="n">source_2</span><span class="p">,</span> <span class="n">data_size_2</span><span class="p">);</span>
+
+<span class="c1">// perform some computations</span>
+<span class="c1">// ...</span>
+
+<span class="c1">// Wait for them to finish</span>
+<span class="n">ebsp_dma_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor_1</span><span class="p">);</span>
+<span class="n">ebsp_dma_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor_2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Pushing a new task will start the DMA engine if it was not started yet. If it was already running, the library will add the task to an internal queue and automatically point the DMA engine to the next task when it is finished. For those who are interested, this is implemented using interrupts.</p>
+<p>In order to use the DMA engine to write data to another core, one needs a memory address that points to the local memory of another core. For this we provide the function <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Some buffer</span>
+<span class="kt">float</span> <span class="n">data</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+
+<span class="c1">// Register it in the BSP system</span>
+<span class="n">bsp_push_reg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">data</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">data</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="c1">// Get an address for the data buffer on the core with pid 3</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">remote_data</span> <span class="o">=</span> <span class="n">ebsp_get_direct_address</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">incoming_data</span><span class="p">);</span>
+
+<span class="c1">// Now we can pass &#39;remote_data&#39; to the DMA engine, or use it directly</span>
+<span class="o">*</span><span class="n">remote_data</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The above example shows how to obtain an address of a variable on another core. This address can then be passed as source or destination to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code>.</p>
+</div>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="memory-allocation">
+<h3>Memory allocation<a class="headerlink" href="#memory-allocation" title="Permalink to this headline">¶</a></h3>
+<p>The memory allocation functions work analogously to the normal C function <code class="docutils literal notranslate"><span class="pre">malloc</span></code>. Memory allocated by <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_ext_malloc()</span></code> and by <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_malloc()</span></code> can both be freed with the same function <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_free()</span></code>, as in the following example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Allocate local memory</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">local_data</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">local_data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ebsp_message</span><span class="p">(</span><span class="s">&quot;Memory allocation failed!&quot;</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">local_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0f</span><span class="p">;</span>
+    <span class="c1">// Free the memory</span>
+    <span class="n">ebsp_free</span><span class="p">(</span><span class="n">local_data</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Allocate external memory</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">external_data</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_ext_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">external_data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">do_computation</span><span class="p">();</span>
+    <span class="c1">// Free the memory</span>
+    <span class="n">ebsp_free</span><span class="p">(</span><span class="n">external_data</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that calling <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_free()</span></code> with a null pointer results in undefined behaviour, so the following is <strong>NOT</strong> allowed:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="o">*</span> <span class="n">local_data</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">local_data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">local_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0f</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// !!! WRONG: This will crash if local_data is NULL</span>
+<span class="n">ebsp_free</span><span class="p">(</span><span class="n">local_data</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="external-memory-dma-transfers">
+<h3>External memory DMA transfers<a class="headerlink" href="#external-memory-dma-transfers" title="Permalink to this headline">¶</a></h3>
+<p>The following example demonstrates the use of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> to write a buffer of local data to external memory and read a buffer from external memory using the DMA engine.:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Allocate buffers</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">external_data_1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_ext_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">external_data_2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_ext_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">local_data_1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">local_data_2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+
+<span class="c1">// Fill local buffer 1 with data</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">local_data_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0f</span><span class="p">;</span>
+
+<span class="c1">// Fill external buffer 2 with data</span>
+<span class="c1">// Note that this is slow</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">external_data_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0f</span><span class="p">;</span>
+
+<span class="c1">// To &#39;tasks&#39; for the DMA engine:</span>
+<span class="c1">// Copy local_data_1 to external_data_1 (write to external memory)</span>
+<span class="c1">// Copy external_data_2 to local_data_2 (read from external memory)</span>
+
+<span class="c1">// This corresponds to two handles</span>
+<span class="n">ebsp_dma_handle</span> <span class="n">descriptor_1</span><span class="p">;</span>
+<span class="n">ebsp_dma_handle</span> <span class="n">descriptor_2</span><span class="p">;</span>
+
+<span class="c1">// Start the DMA with the writing task</span>
+<span class="n">ebsp_dma_push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor_1</span><span class="p">,</span> <span class="n">external_data_1</span><span class="p">,</span> <span class="n">local_data_1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">local_data_1</span><span class="p">));</span>
+
+<span class="c1">// We can &#39;push&#39; the next task while the DMA already works on the first task</span>
+<span class="n">ebsp_dma_push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor_2</span><span class="p">,</span> <span class="n">local_data_2</span><span class="p">,</span> <span class="n">external_data_2</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">local_data_2</span><span class="p">));</span>
+
+<span class="c1">// Do lengthy computation in the mean time</span>
+<span class="n">do_computations</span><span class="p">();</span>
+
+<span class="c1">// Wait for the DMA to finish the second task</span>
+<span class="n">ebsp_dma_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor_2</span><span class="p">);</span>
+
+<span class="c1">// Because the DMA performs the tasks in order,</span>
+<span class="c1">// we can be assured that the first task is completed as well</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="core-to-core-dma-transfers">
+<h3>Core to core DMA transfers<a class="headerlink" href="#core-to-core-dma-transfers" title="Permalink to this headline">¶</a></h3>
+<p>To use the DMA to transfer data to another core, we need to get the address that points to another core. This can be done using <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_get_direct_address()</span></code>. In the following example we have to arrays: <code class="docutils literal notranslate"><span class="pre">my_data</span></code> and <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code>. The idea is to copy the contents of <code class="docutils literal notranslate"><span class="pre">my_data</span></code> on the local core into <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code> on the next core. To do this, we first register <code class="docutils literal notranslate"><span class="pre">incoming_data</span></code>. After this we can get the address of the corresponding array on a remote core. In this case we take the core with pid <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">+</span> <span class="pre">1</span></code> where <code class="docutils literal notranslate"><span class="pre">s</span></code> is the pid of the local core. With this address we can now use <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_push()</span></code> to copy data using the DMA engine. During this transfer, other computations can be done. After this we use <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">ebsp_dma_wait()</span></code> which blocks untill the transfer is complete (or returns immediately if already completed).:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bsp_pid</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
+
+<span class="c1">// Data to be sent</span>
+<span class="kt">float</span> <span class="n">my_data</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+
+<span class="c1">// Buffer to receive data</span>
+<span class="kt">float</span> <span class="n">incoming_data</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+
+<span class="c1">// Register it in the BSP system</span>
+<span class="n">bsp_push_reg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">incoming_data</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">incoming_data</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="c1">// Get an address for the incoming_data buffer on the core with pid s + 1.</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">remote_data</span> <span class="o">=</span> <span class="n">ebsp_get_direct_address</span><span class="p">((</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">incoming_data</span><span class="p">);</span>
+
+<span class="c1">// Start the DMA to copy the data from my_data on this core to incoming_data on the next core</span>
+<span class="n">ebsp_dma_handle</span> <span class="n">descriptor</span><span class="p">;</span>
+<span class="n">ebsp_dma_push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor</span><span class="p">,</span> <span class="n">remote_data</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">my_data</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">my_data</span><span class="p">));</span>
+
+<span class="c1">// Do lengthy computation</span>
+<span class="n">do_computations</span><span class="p">();</span>
+
+<span class="c1">// Wait for the DMA transfer to finish</span>
+<span class="n">ebsp_dma_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">descriptor</span><span class="p">);</span>
+
+<span class="c1">// Done</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenfunction: Cannot find file: /export/scratch1/buurlage/code/parallel/epiphany-bsp/docs/xml_e/index.xml</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="memory_details.html" class="btn btn-neutral float-right" title="Parallella Memory Details" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="output.html" class="btn btn-neutral" title="Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
