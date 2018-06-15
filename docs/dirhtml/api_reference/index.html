@@ -1,0 +1,1310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Reference &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="prev" title="BSP Model" href="../bsp/" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="../_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction and Setting up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/">Getting started: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../variables/">BSP Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mp/">Message Passing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../host_client/">Communicating with the Epiphany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../streaming/">Data streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_features/">Other features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../output/">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory_management/">Memory Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../memory_details/">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsp/">BSP Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#host">Host</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-init">bsp_init</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-spmd">ebsp_spmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-begin">bsp_begin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-end">bsp_end</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-nprocs">bsp_nprocs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-set-tagsize">ebsp_set_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-send-down">ebsp_send_down</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-get-tagsize">ebsp_get_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-qsize">ebsp_qsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-get-tag">ebsp_get_tag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-move">ebsp_move</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-hpmove">ebsp_hpmove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-create">bsp_stream_create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-write">ebsp_write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-read">ebsp_read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-set-sync-callback">ebsp_set_sync_callback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-set-end-callback">ebsp_set_end_callback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#epiphany">Epiphany</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">bsp_begin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">bsp_end</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">bsp_nprocs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-pid">bsp_pid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-time">bsp_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-host-time">ebsp_host_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-raw-time">ebsp_raw_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-sync">bsp_sync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ebsp-barrier">ebsp_barrier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-push-reg">bsp_push_reg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-pop-reg">bsp_pop_reg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-put">bsp_put</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-get">bsp_get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-hpput">bsp_hpput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-hpget">bsp_hpget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-set-tagsize">bsp_set_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">ebsp_get_tagsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-send">bsp_send</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-qsize">bsp_qsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-get-tag">bsp_get_tag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-move">bsp_move</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-hpmove">bsp_hpmove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-open">bsp_stream_open</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-close">bsp_stream_close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-move-up">bsp_stream_move_up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-move-down">bsp_stream_move_down</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stream-seek">bsp_stream_seek</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../">Docs</a> &raquo;</li>
+        
+      <li>API Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api_reference.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<p>On this page we give a complete overview of all the primitives we expose in the main EBSP library.</p>
+<div class="section" id="host">
+<h2>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bsp-init">
+<h3>bsp_init<a class="headerlink" href="#bsp-init" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv38bsp_initPKciPPc">
+<span id="_CPPv28bsp_initPKciPPc"></span><span id="bsp_init__cCP.i.cPP"></span><span class="target" id="host__bsp_8h_1a0e3c4e8b772e2ed3d8b231289d694e9c"></span>int <code class="descname">bsp_init</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>e_name</em>, int <em>argc</em>, char **<em>argv</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv38bsp_initPKciPPc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initializes the BSP system. </p>
+<p><p>Sets up all the BSP variables and loads the epiphany BSP program.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">e_name</span></code>: A string with the srec binary name of the Epiphany program </li>
+<li><code class="docutils literal notranslate"><span class="pre">argc</span></code>: The number of input arguments </li>
+<li><code class="docutils literal notranslate"><span class="pre">argv</span></code>: An array of strings with the input arguments </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>The string <code class="docutils literal notranslate"><span class="pre">e_name</span></code> must be of the form <code class="docutils literal notranslate"><span class="pre">myprogram.srec</span></code>. This function will search for the file in the same directory as the host program, and not in the current working directory.</p>
+<p>Usage example: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="nb">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bsp_init</span><span class="p">(</span><span class="s2">&quot;e_program.srec&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The <code class="docutils literal notranslate"><span class="pre">argc</span></code> and <code class="docutils literal notranslate"><span class="pre">argv</span></code> parameters are ignored in the current implementation. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-spmd">
+<h3>ebsp_spmd<a class="headerlink" href="#ebsp-spmd" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39ebsp_spmdv">
+<span id="_CPPv29ebsp_spmdv"></span><span id="ebsp_spmd"></span><span class="target" id="host__bsp_8h_1a12385c882b6096484952fe7acad958bd"></span>int <code class="descname">ebsp_spmd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39ebsp_spmdv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Runs the Epiphany program on the Epiphany cores. </p>
+<p><p>This function will block until the BSP kernel program is finished. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure (e.g. after <code class="docutils literal notranslate"><span class="pre">bsp_abort</span></code> is called on a core)</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-begin">
+<h3>bsp_begin<a class="headerlink" href="#bsp-begin" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39bsp_begini">
+<span id="_CPPv29bsp_begini"></span><span id="bsp_begin__i"></span><span class="target" id="host__bsp_8h_1a6e8b0d677de36ad531e72b212e45f14e"></span>int <code class="descname">bsp_begin</code><span class="sig-paren">(</span>int <em>nprocs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39bsp_begini" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Loads the BSP program onto the Epiphany cores. </p>
+<p><p>Usage example: </p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="nb">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bsp_init</span><span class="p">(</span><span class="s2">&quot;e_program.srec&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">bsp_begin</span><span class="p">(</span><span class="n">bsp_nprocs</span><span class="p">());</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">nprocs</span></code>: The number of processors to run on </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The current implementation only allows <code class="docutils literal notranslate"><span class="pre">nprocs</span></code> to be a multiple of 4 on the 16-core Parallella. Other values of <code class="docutils literal notranslate"><span class="pre">nprocs</span></code> are rounded down. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-end">
+<h3>bsp_end<a class="headerlink" href="#bsp-end" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv37bsp_endv">
+<span id="_CPPv27bsp_endv"></span><span id="bsp_end"></span><span class="target" id="host__bsp_8h_1a56a290cf0e1b78c832024cd5399f46d0"></span>int <code class="descname">bsp_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv37bsp_endv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Finalizes and cleans up the BSP program. </p>
+<p><p>Usage example: </p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="nb">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bsp_init</span><span class="p">(</span><span class="s2">&quot;e_program.srec&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">bsp_begin</span><span class="p">(</span><span class="n">bsp_nprocs</span><span class="p">());</span>
+    <span class="n">ebsp_spmd</span><span class="p">();</span>
+    <span class="n">bsp_end</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>This function is different from the bsp_end function in e_bsp.h </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-nprocs">
+<h3>bsp_nprocs<a class="headerlink" href="#bsp-nprocs" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv310bsp_nprocsv">
+<span id="_CPPv210bsp_nprocsv"></span><span id="bsp_nprocs"></span><span class="target" id="host__bsp_8h_1a8980a3403ba99114626b34492b13c1cd"></span>int <code class="descname">bsp_nprocs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv310bsp_nprocsv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the number of available processors (Epiphany cores). </p>
+<p><p>This function may be called after </p>
+<a class="reference internal" href="../basic/#host__bsp_8h_1a0e3c4e8b772e2ed3d8b231289d694e9c"><span class="std std-ref">bsp_init()</span></a>. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The number of available processors</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-set-tagsize">
+<h3>ebsp_set_tagsize<a class="headerlink" href="#ebsp-set-tagsize" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv316ebsp_set_tagsizePi">
+<span id="_CPPv216ebsp_set_tagsizePi"></span><span id="ebsp_set_tagsize__iP"></span><span class="target" id="host__bsp_8h_1a27bb2cce1a92dbf95ab28ea662216370"></span>void <code class="descname">ebsp_set_tagsize</code><span class="sig-paren">(</span>int *<em>tag_bytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv316ebsp_set_tagsizePi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set initial tagsize for message passing. </p>
+<p><p>The default tagsize is zero. This function should be called at most once, before any messages are sent. Calling this when receiving messages results in undefined behaviour.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_bytes</span></code>: A pointer to an integer containing the new tagsize, receiving the old tagsize on return.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>It is not possible to send messages with different tag sizes. Doing so will result in undefined behaviour.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The tagsize set using this function is also used for inter-core messages. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-send-down">
+<h3>ebsp_send_down<a class="headerlink" href="#ebsp-send-down" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv314ebsp_send_downiPKvPKvi">
+<span id="_CPPv214ebsp_send_downiPKvPKvi"></span><span id="ebsp_send_down__i.voidCP.voidCP.i"></span><span class="target" id="host__bsp_8h_1ae51209685120c4965c41b2056fee1872"></span>void <code class="descname">ebsp_send_down</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv314ebsp_send_downiPKvPKvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Send a message to the Epiphany cores. </p>
+<p><p>This is the preferred way to send initial data (for computation) to the Epiphany cores.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the message tag </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the payload in bytes</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>The size of the buffer pointed to by tag has to be <code class="docutils literal notranslate"><span class="pre">tagsize</span></code>, and must be the same for every message being sent. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-get-tagsize">
+<h3>ebsp_get_tagsize<a class="headerlink" href="#ebsp-get-tagsize" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv316ebsp_get_tagsizev">
+<span id="_CPPv216ebsp_get_tagsizev"></span><span id="ebsp_get_tagsize"></span><span class="target" id="host__bsp_8h_1a47cf6f4bc4ee48eddc146f52d7eb8f95"></span>int <code class="descname">ebsp_get_tagsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv316ebsp_get_tagsizev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the tagsize as set by the Epiphany program. </p>
+<p><p>Use only for gathering result messages at the end of a BSP program.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The tagsize in bytes</dd>
+</dl>
+</p>
+<p>When <a class="reference internal" href="../basic/#host__bsp_8h_1a12385c882b6096484952fe7acad958bd"><span class="std std-ref">ebsp_spmd()</span></a> returns, the Epiphany program can have set a different tagsize which can be obtained using this function. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-qsize">
+<h3>ebsp_qsize<a class="headerlink" href="#ebsp-qsize" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv310ebsp_qsizePiPi">
+<span id="_CPPv210ebsp_qsizePiPi"></span><span id="ebsp_qsize__iP.iP"></span><span class="target" id="host__bsp_8h_1a0dc8a00e88a2ecb254bde2ec8665159e"></span>void <code class="descname">ebsp_qsize</code><span class="sig-paren">(</span>int *<em>packets</em>, int *<em>accum_bytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv310ebsp_qsizePiPi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the amount of messages in the queue and their total size in bytes. </p>
+<p><p>Use only for gathering result messages at the end of a BSP program. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">packets</span></code>: A pointer to an integer receiving the number of messages </li>
+<li><code class="docutils literal notranslate"><span class="pre">accum_bytes</span></code>: The total size of the data payloads of the messages, in bytes.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-get-tag">
+<h3>ebsp_get_tag<a class="headerlink" href="#ebsp-get-tag" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv312ebsp_get_tagPiPv">
+<span id="_CPPv212ebsp_get_tagPiPv"></span><span id="ebsp_get_tag__iP.voidP"></span><span class="target" id="host__bsp_8h_1a89a2c446c95a777ecad3e67150a072dd"></span>void <code class="descname">ebsp_get_tag</code><span class="sig-paren">(</span>int *<em>status</em>, void *<em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv312ebsp_get_tagPiPv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Peek the next message. </p>
+<p><p>Use only for gathering result messages at the end of a BSP program. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">status</span></code>: A pointer to an integer receiving the amount of bytes of the next message payload, or -1 if there are no more messages. </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to a buffer receiving the tag of the next message. This buffer should be large enough (<a class="reference internal" href="../host_client/#host__bsp_8h_1a47cf6f4bc4ee48eddc146f52d7eb8f95"><span class="std std-ref">ebsp_get_tagsize()</span></a>).</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-move">
+<h3>ebsp_move<a class="headerlink" href="#ebsp-move" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39ebsp_movePvi">
+<span id="_CPPv29ebsp_movePvi"></span><span id="ebsp_move__voidP.i"></span><span class="target" id="host__bsp_8h_1af97081420510913465a16fc0826f51f8"></span>void <code class="descname">ebsp_move</code><span class="sig-paren">(</span>void *<em>payload</em>, int <em>buffer_size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39ebsp_movePvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the next message from the message queue and pop the message. </p>
+<p><p>This will copy the payload and pop the message from the queue. The size of the payload can be obtained by calling bsp_get_tag(). If </p>
+<code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> is smaller than the data payload then the data is truncated.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to a buffer receiving the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">buffer_size</span></code>: The size of the buffer</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Use only for gathering result messages at the end of a BSP program. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-hpmove">
+<h3>ebsp_hpmove<a class="headerlink" href="#ebsp-hpmove" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv311ebsp_hpmovePPvPPv">
+<span id="_CPPv211ebsp_hpmovePPvPPv"></span><span id="ebsp_hpmove__voidPP.voidPP"></span><span class="target" id="host__bsp_8h_1ac5738a8e7a86659a238c9e90756dadc5"></span>int <code class="descname">ebsp_hpmove</code><span class="sig-paren">(</span>void **<em>tag_ptr_buf</em>, void **<em>payload_ptr_buf</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv311ebsp_hpmovePPvPPv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the next message, with tag, from the queue and pop the message. </p>
+<p><p>This is the faster alternative of </p>
+<a class="reference internal" href="#host__bsp_8h_1af97081420510913465a16fc0826f51f8"><span class="std std-ref">ebsp_move()</span></a>, as this function does not copy the data but returns the pointers to it.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The number of bytes of the payload data</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_ptr_buf</span></code>: A pointer to a pointer receiving the location of the tag </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload_ptr_buf</span></code>: A pointer to a pointer receiving the location of the data pyaload </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Use only for gathering result messages at the end of a BSP program. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-stream-create">
+<h3>bsp_stream_create<a class="headerlink" href="#bsp-stream-create" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv317bsp_stream_createiiPKv">
+<span id="_CPPv217bsp_stream_createiiPKv"></span><span id="bsp_stream_create__i.i.voidCP"></span><span class="target" id="host__bsp_8h_1ae7db595dbbbfde687bc1a208e419a7d8"></span>void *<code class="descname">bsp_stream_create</code><span class="sig-paren">(</span>int <em>stream_size</em>, int <em>token_size</em>, <em class="property">const</em> void *<em>initial_data</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv317bsp_stream_createiiPKv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates a generic stream for streaming data to or from an Epiphany core. </p>
+<p><p>The function returns NULL on failure.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A pointer to a section of external memory storing the tokens.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream_size</span></code>: The total number of bytes of data in the stream. </li>
+<li><code class="docutils literal notranslate"><span class="pre">token_size</span></code>: The size in bytes of a single token. Must be at least 16. </li>
+<li><code class="docutils literal notranslate"><span class="pre">initial_data</span></code>: (Optional) The data which should be streamed to an Epiphany core. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">initial_data</span></code> is nonzero, it is copied to the stream (<code class="docutils literal notranslate"><span class="pre">stream_size</span></code> bytes). If <code class="docutils literal notranslate"><span class="pre">initial_data</span></code> is zero, an empty stream of size <code class="docutils literal notranslate"><span class="pre">stream_size</span></code> is created. In this case, <code class="docutils literal notranslate"><span class="pre">stream_size</span></code> should be the maximum number of bytes that will be sent up from the Epiphany cores to the host.</p>
+<p>This function prints an error if <code class="docutils literal notranslate"><span class="pre">token_size</span></code> is less than 16.</p>
+<p>The format of the data pointed to by the return value is as follows: Before every token, there are two integers that specify the size of the preceding token and the size of the token itself.</p>
+<p>00000000, nextsize, data, prevsize, nextsize, data, … prevsize, nextsize, data, prevsize, 00000000</p>
+<p>So a header consists of two integers (8 byte total). The two sizes do NOT include these headers. They are only the size of the data inbetween.</p>
+<p>If you want to use the returned pointer directly you have to manually take care of this data format.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>If <code class="docutils literal notranslate"><span class="pre">initial_data</span></code> is nonzero, the data is copied so that after the call it can safely be freed or overwritten by the user. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-write">
+<h3>ebsp_write<a class="headerlink" href="#ebsp-write" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv310ebsp_writeiPv5off_ti">
+<span id="_CPPv210ebsp_writeiPv5off_ti"></span><span id="ebsp_write__i.voidP.off_t.i"></span><span class="target" id="host__bsp_8h_1a00f9d9253d6ffa496ee041955689c99a"></span>int <code class="descname">ebsp_write</code><span class="sig-paren">(</span>int <em>pid</em>, void *<em>src</em>, off_t <em>dst</em>, int <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv310ebsp_writeiPv5off_ti" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Write data to the Epiphany processor. </p>
+<p><p>This is an alternative to the BSP Message Passing system. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: A pointer to the source data </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: The destination address (as seen by the Epiphany core) </li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: The amount of bytes to be copied </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-read">
+<h3>ebsp_read<a class="headerlink" href="#ebsp-read" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39ebsp_readi5off_tPvi">
+<span id="_CPPv29ebsp_readi5off_tPvi"></span><span id="ebsp_read__i.off_t.voidP.i"></span><span class="target" id="host__bsp_8h_1a65423fcb58e7d782c3914a8689dc527f"></span>int <code class="descname">ebsp_read</code><span class="sig-paren">(</span>int <em>pid</em>, off_t <em>src</em>, void *<em>dst</em>, int <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39ebsp_readi5off_tPvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read data from the Epiphany processor. </p>
+<p><p>This is an alternative to the BSP Message Passing system. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the source processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: The source address (as seen by the Epiphany core) </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: A pointer to a buffer receiving the data </li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: The amount of bytes to be copied </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-set-sync-callback">
+<h3>ebsp_set_sync_callback<a class="headerlink" href="#ebsp-set-sync-callback" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv322ebsp_set_sync_callbackPFvvE">
+<span id="_CPPv222ebsp_set_sync_callbackPFvvE"></span><span class="target" id="host__bsp_8h_1ad542fb7eba809cad18949b672708545b"></span>void <code class="descname">ebsp_set_sync_callback</code><span class="sig-paren">(</span>void (*<em>cb</em>)<span class="sig-paren">(</span><span class="sig-paren">)</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv322ebsp_set_sync_callbackPFvvE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the (optional) callback for synchronizing epiphany cores with the host program. </p>
+<p><p>This callback is called when all Epiphany cores have called ebsp_host_sync(). Note that this does not happen at bsp_sync(). </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">cb</span></code>: A function pointer to the callback function</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-set-end-callback">
+<h3>ebsp_set_end_callback<a class="headerlink" href="#ebsp-set-end-callback" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv321ebsp_set_end_callbackPFvvE">
+<span id="_CPPv221ebsp_set_end_callbackPFvvE"></span><span class="target" id="host__bsp_8h_1a96ce8db901942447741ee8d2ace5d161"></span>void <code class="descname">ebsp_set_end_callback</code><span class="sig-paren">(</span>void (*<em>cb</em>)<span class="sig-paren">(</span><span class="sig-paren">)</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv321ebsp_set_end_callbackPFvvE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the (optional) callback for finalizing. </p>
+<p><p>This callback is called when </p>
+<a class="reference internal" href="../basic/#host__bsp_8h_1a12385c882b6096484952fe7acad958bd"><span class="std std-ref">ebsp_spmd()</span></a> finishes. It is primarily used by the ebsp memory inspector and should not be needed. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">cb</span></code>: A function pointer to the callback function</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="epiphany">
+<h2>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>bsp_begin<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39bsp_beginv">
+<span id="_CPPv29bsp_beginv"></span><span id="bsp_begin"></span><span class="target" id="e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"></span>void <code class="descname">bsp_begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39bsp_beginv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Denotes the start of a BSP program. </p>
+<p>This initializes the BSP system on the core.</p>
+<p>Must be called before calling any other BSP function. Should only be called once in a program. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="id2">
+<h3>bsp_end<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv37bsp_endv">
+<span id="_CPPv27bsp_endv"></span><span class="target" id="e__bsp_8h_1ad794334e180b711537499871020a76fe"></span>void <code class="descname">bsp_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Denotes the end of a BSP program. </p>
+<p>Finalizes and cleans up the BSP program. No other BSP functions are allowed to be called after this function is called.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Must be followed by a return statement in your main function if you want to call <code class="docutils literal notranslate"><span class="pre">ebsp_spmd()</span></code> multiple times. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h3>bsp_nprocs<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv310bsp_nprocsv">
+<span id="_CPPv210bsp_nprocsv"></span><span class="target" id="e__bsp_8h_1a8980a3403ba99114626b34492b13c1cd"></span>int <code class="descname">bsp_nprocs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the number of Epiphany cores currently in use. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>An integer indicating the number of cores on which the program runs. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-pid">
+<h3>bsp_pid<a class="headerlink" href="#bsp-pid" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv37bsp_pidv">
+<span id="_CPPv27bsp_pidv"></span><span id="bsp_pid"></span><span class="target" id="e__bsp_8h_1a1e4f897e62f8b20a7f57cc5488bfb8c8"></span>int <code class="descname">bsp_pid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv37bsp_pidv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the processor identifier of the local core. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>An integer with the id of the core The processor id is an integer in the range [0, .., <a class="reference internal" href="../basic/#e__bsp_8h_1a8980a3403ba99114626b34492b13c1cd"><span class="std std-ref">bsp_nprocs()</span></a> - 1]. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-time">
+<h3>bsp_time<a class="headerlink" href="#bsp-time" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv38bsp_timev">
+<span id="_CPPv28bsp_timev"></span><span id="bsp_time"></span><span class="target" id="e__bsp_8h_1a6ee4e522d55605dc51db6ea33c06c3c2"></span>float <code class="descname">bsp_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv38bsp_timev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the time in seconds since <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a> was called. </p>
+<p><p>The native Epiphany timer does not support time differences longer than </p>
+<code class="docutils literal notranslate"><span class="pre">UINT_MAX/(600000000)</span></code> which is roughly 7 seconds.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A floating point value with the number of elapsed seconds since the call to <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a></dd>
+</dl>
+</p>
+<p>If you want to measure longer time intervals, we suggest you use the (less accurate) <a class="reference internal" href="../other_features/#e__bsp_8h_1aeb45a09e9b589b1fdc7ede2f84d612db"><span class="std std-ref">ebsp_host_time()</span></a>.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Using this in combination with <a class="reference internal" href="../other_features/#e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"><span class="std std-ref">ebsp_raw_time()</span></a> leads to unspecified behaviour, you should only use one of these in your program.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>This uses the internal Epiphany <code class="docutils literal notranslate"><span class="pre">E_CTIMER_0</span></code> timer so the second timer can be used for other purposes. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-host-time">
+<h3>ebsp_host_time<a class="headerlink" href="#ebsp-host-time" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv314ebsp_host_timev">
+<span id="_CPPv214ebsp_host_timev"></span><span id="ebsp_host_time"></span><span class="target" id="e__bsp_8h_1aeb45a09e9b589b1fdc7ede2f84d612db"></span>float <code class="descname">ebsp_host_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv314ebsp_host_timev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the time in seconds since <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a> was called. </p>
+<p><p>This function uses the system clock of the host to obtain the elapsed time. Because of varying amounts of latency this can be very inaccurate (its precision is in the order of milliseconds), but it supports time intervals of arbitrary length. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A floating point value with the number of seconds since <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a></dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-raw-time">
+<h3>ebsp_raw_time<a class="headerlink" href="#ebsp-raw-time" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv313ebsp_raw_timev">
+<span id="_CPPv213ebsp_raw_timev"></span><span id="ebsp_raw_time"></span><span class="target" id="e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"></span>unsigned int <code class="descname">ebsp_raw_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv313ebsp_raw_timev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the number of clockcycles that have passed since the previous call to <a class="reference internal" href="../other_features/#e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"><span class="std std-ref">ebsp_raw_time()</span></a>. </p>
+<p><p>This function has less overhead than bsp_time.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>An unsigned integer with the number of clockcycles</dd>
+</dl>
+</p>
+<p>Divide the number of clockcycles by 600 000 000 to get the time in seconds.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Using this in combination with <a class="reference internal" href="../other_features/#e__bsp_8h_1a6ee4e522d55605dc51db6ea33c06c3c2"><span class="std std-ref">bsp_time()</span></a> leads to unspecified behaviour, you should only use one of these in your program.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>This uses the internal Epiphany <code class="docutils literal notranslate"><span class="pre">E_CTIMER_0</span></code> timer so the second timer can be used for other purposes. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-sync">
+<h3>bsp_sync<a class="headerlink" href="#bsp-sync" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv38bsp_syncv">
+<span id="_CPPv28bsp_syncv"></span><span id="bsp_sync"></span><span class="target" id="e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"></span>void <code class="descname">bsp_sync</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv38bsp_syncv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Denotes the end of a superstep, and performs all outstanding communications and registrations. </p>
+<p>Serves as a blocking barrier which halts execution until all Epiphany cores are finished with the current superstep.</p>
+<p>If only a synchronization is required, and you do not want the outstanding communications and registrations to be resolved, then we suggest you use the more efficient function <a class="reference internal" href="../variables/#e__bsp_8h_1aa0bf11c0e00dbd25c1595d6892366d4c"><span class="std std-ref">ebsp_barrier()</span></a> </p>
+</dd></dl>
+
+</div>
+<div class="section" id="ebsp-barrier">
+<h3>ebsp_barrier<a class="headerlink" href="#ebsp-barrier" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv312ebsp_barrierv">
+<span id="_CPPv212ebsp_barrierv"></span><span id="ebsp_barrier"></span><span class="target" id="e__bsp_8h_1aa0bf11c0e00dbd25c1595d6892366d4c"></span>void <code class="descname">ebsp_barrier</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv312ebsp_barrierv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Synchronizes cores without resolving outstanding communication. </p>
+<p>This function is more efficient than <a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a>. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-push-reg">
+<h3>bsp_push_reg<a class="headerlink" href="#bsp-push-reg" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv312bsp_push_regPKvKi">
+<span id="_CPPv212bsp_push_regPKvKi"></span><span id="bsp_push_reg__voidCP.iC"></span><span class="target" id="e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"></span>void <code class="descname">bsp_push_reg</code><span class="sig-paren">(</span><em class="property">const</em> void *<em>variable</em>, <em class="property">const</em> int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv312bsp_push_regPKvKi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Register a variable as available for remote access. </p>
+<p><p>The operation takes effect after the next call to </p>
+<a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a>. Only one registration is allowed in a single superstep. When a variable is registered, every core must do so.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">variable</span></code>: A pointer to the local variable </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size in bytes of the variable</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>The system maintains a stack of registered variables. Any variables registered in the same superstep are identified with each other. There is a maximum number of allowed registered variables at any given time, the specific number is platform dependent. This limit will be lifted in a future version.</p>
+<p>Registering a variable needs to be done before it can be used with the functions <a class="reference internal" href="../variables/#e__bsp_8h_1a938c8add6ddc13b9bf2841d189f0027a"><span class="std std-ref">bsp_put()</span></a>, <a class="reference internal" href="../variables/#e__bsp_8h_1a64cbcfe4c116ab6ea04f7f7235f17965"><span class="std std-ref">bsp_hpput()</span></a>, <a class="reference internal" href="../variables/#e__bsp_8h_1a6c391523672f7e98ea5c8845341423ad"><span class="std std-ref">bsp_get()</span></a>, <a class="reference internal" href="../variables/#e__bsp_8h_1aa1b531064994c6f0ad23a3a749a64978"><span class="std std-ref">bsp_hpget()</span></a>.</p>
+<p>Usage example: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>int a, b, c, p;
+int x[16];
+
+bsp_push_reg(&amp;a, sizeof(int));
+bsp_sync();
+bsp_push_reg(&amp;x, sizeof(x));
+bsp_sync();
+
+p = bsp_pid();
+
+// Get the value of the `a` variable of core 0 and save it in `b`
+bsp_get(0, &amp;a, 0, &amp;b, sizeof(int));
+
+// Save the value of `c` into the array `x` on core 0, at array location p
+bsp_put(0, &amp;c, &amp;x, p*sizeof(int), sizeof(int));
+</pre></div>
+</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>In the current implementation, the parameter nbytes is ignored. In future versions it will be used to make communication more efficient. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-pop-reg">
+<h3>bsp_pop_reg<a class="headerlink" href="#bsp-pop-reg" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv311bsp_pop_regPKv">
+<span id="_CPPv211bsp_pop_regPKv"></span><span id="bsp_pop_reg__voidCP"></span><span class="target" id="e__bsp_8h_1aa950687e90d6e73efec25bbd8cbc6299"></span>void <code class="descname">bsp_pop_reg</code><span class="sig-paren">(</span><em class="property">const</em> void *<em>variable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv311bsp_pop_regPKv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>De-register a variable for remote memory access. </p>
+<p><p>The operation takes effect after the next call to </p>
+<a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a>. The order in which the variables are popped does not matter. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">variable</span></code>: A pointer to the variable, which must have been previously registered with <a class="reference internal" href="../variables/#e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"><span class="std std-ref">bsp_push_reg()</span></a></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-put">
+<h3>bsp_put<a class="headerlink" href="#bsp-put" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv37bsp_putiPKvPvii">
+<span id="_CPPv27bsp_putiPKvPvii"></span><span id="bsp_put__i.voidCP.voidP.i.i"></span><span class="target" id="e__bsp_8h_1a938c8add6ddc13b9bf2841d189f0027a"></span>void <code class="descname">bsp_put</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>src</em>, void *<em>dst</em>, int <em>offset</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv37bsp_putiPKvPvii" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Copy data to another processor (buffered). </p>
+<p><p>The data in src is copied to a buffer (currently in the inefficient external memory) at the moment bsp_put is called. Therefore the caller can replace the data in src right after bsp_put returns. When </p>
+<a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a> is called, the data will be transferred from the buffer to the destination at the other processor.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor (this is allowed to be the id of the sending processor) </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: A pointer to the source data </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: A variable location that was previously registered using <a class="reference internal" href="../variables/#e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"><span class="std std-ref">bsp_push_reg()</span></a> </li>
+<li><code class="docutils literal notranslate"><span class="pre">offset</span></code>: The offset in bytes to be added to the remote location corresponding to the variable location <code class="docutils literal notranslate"><span class="pre">dst</span></code> </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The number of bytes to be copied</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>No warning is thrown when nbytes exceeds the size of the variable src. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>The current implementation uses external memory which restrains the performance of this function greatly. We suggest you use <a class="reference internal" href="../variables/#e__bsp_8h_1a64cbcfe4c116ab6ea04f7f7235f17965"><span class="std std-ref">bsp_hpput()</span></a> wherever possible to ensure good performance. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-get">
+<h3>bsp_get<a class="headerlink" href="#bsp-get" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv37bsp_getiPKviPvi">
+<span id="_CPPv27bsp_getiPKviPvi"></span><span id="bsp_get__i.voidCP.i.voidP.i"></span><span class="target" id="e__bsp_8h_1a6c391523672f7e98ea5c8845341423ad"></span>void <code class="descname">bsp_get</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>src</em>, int <em>offset</em>, void *<em>dst</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv37bsp_getiPKviPvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Copy data from another processor (buffered) </p>
+<p><p>No data transaction takes place until the next call to bsp_sync, at which point the data will be copied from source to destination.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor (this is allowed to be the id of the sending processor) </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: A variable that has been previously registered using <a class="reference internal" href="../variables/#e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"><span class="std std-ref">bsp_push_reg()</span></a> </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: A pointer to a local destination </li>
+<li><code class="docutils literal notranslate"><span class="pre">offset</span></code>: The offset in bytes to be added to the remote location corresponding to the variable location <code class="docutils literal notranslate"><span class="pre">src</span></code> </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The number of bytes to be copied</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The official BSP standard dictates that first all the data of all <a class="reference internal" href="../variables/#e__bsp_8h_1a6c391523672f7e98ea5c8845341423ad"><span class="std std-ref">bsp_get()</span></a> transactions is copied into a buffer, after which all the data is written to the proper destinations. This would allow one to use bsp_get to swap to variables in place. Because of memory constraints we do not comply with the standard. In our implementation. The <a class="reference internal" href="../variables/#e__bsp_8h_1a6c391523672f7e98ea5c8845341423ad"><span class="std std-ref">bsp_get()</span></a> transactions are all executed at the same time, therefore such a swap would result in undefined behaviour.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>No warning is thrown when nbytes exceeds the size of the variable src. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-hpput">
+<h3>bsp_hpput<a class="headerlink" href="#bsp-hpput" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39bsp_hpputiPKvPvii">
+<span id="_CPPv29bsp_hpputiPKvPvii"></span><span id="bsp_hpput__i.voidCP.voidP.i.i"></span><span class="target" id="e__bsp_8h_1a64cbcfe4c116ab6ea04f7f7235f17965"></span>void <code class="descname">bsp_hpput</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>src</em>, void *<em>dst</em>, int <em>offset</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39bsp_hpputiPKvPvii" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Copy data to another processor, unbuffered. </p>
+<p><p>The data is immediately copied into the destination at the remote processor, as opposed to bsp_put which first copies the data to a buffer. This means the programmer must make sure that the other processor is not using the destination at this moment. The data transfer is guaranteed to be complete after the next call to </p>
+<a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a>.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor (this is allowed to be the id of the sending processor) </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: A pointer to local source data </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: A variable location that was previously registered using <a class="reference internal" href="../variables/#e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"><span class="std std-ref">bsp_push_reg()</span></a> </li>
+<li><code class="docutils literal notranslate"><span class="pre">offset</span></code>: The offset in bytes to be added to the remote location corresponding to the variable location <code class="docutils literal notranslate"><span class="pre">dst</span></code> </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The number of bytes to be copied</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>No warning is thrown when nbytes exceeds the size of the variable src. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-hpget">
+<h3>bsp_hpget<a class="headerlink" href="#bsp-hpget" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39bsp_hpgetiPKviPvi">
+<span id="_CPPv29bsp_hpgetiPKviPvi"></span><span id="bsp_hpget__i.voidCP.i.voidP.i"></span><span class="target" id="e__bsp_8h_1aa1b531064994c6f0ad23a3a749a64978"></span>void <code class="descname">bsp_hpget</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>src</em>, int <em>offset</em>, void *<em>dst</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39bsp_hpgetiPKviPvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Copy data from another processor. </p>
+<p>This function is the unbuffered version of <a class="reference internal" href="../variables/#e__bsp_8h_1a6c391523672f7e98ea5c8845341423ad"><span class="std std-ref">bsp_get()</span></a>. <p>As opposed to </p>
+<a class="reference internal" href="../variables/#e__bsp_8h_1a6c391523672f7e98ea5c8845341423ad"><span class="std std-ref">bsp_get()</span></a>, the data is transferred immediately When <a class="reference internal" href="../variables/#e__bsp_8h_1aa1b531064994c6f0ad23a3a749a64978"><span class="std std-ref">bsp_hpget()</span></a> is called. When using this function you must make sure that the source data is available and prepared upon calling. For performance reasons, communication using this function should be preferred over buffered communication.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor (this is allowed to be the id of the sending processor) </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: A variable that has been previously registered using <a class="reference internal" href="../variables/#e__bsp_8h_1a9e7246704831651b6090b88731a84ca8"><span class="std std-ref">bsp_push_reg()</span></a> </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: A pointer to a local destination </li>
+<li><code class="docutils literal notranslate"><span class="pre">offset</span></code>: The offset in bytes to be added to the remote location corresponding to the variable location <code class="docutils literal notranslate"><span class="pre">src</span></code> </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The number of bytes to be copied</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>No warning is thrown when nbytes exceeds the size of the variable src. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-set-tagsize">
+<h3>bsp_set_tagsize<a class="headerlink" href="#bsp-set-tagsize" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv315bsp_set_tagsizePi">
+<span id="_CPPv215bsp_set_tagsizePi"></span><span id="bsp_set_tagsize__iP"></span><span class="target" id="e__bsp_8h_1a1f711c4d860f03a90257f6072d9e70ec"></span>void <code class="descname">bsp_set_tagsize</code><span class="sig-paren">(</span>int *<em>tag_bytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv315bsp_set_tagsizePi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the tag size. </p>
+<p><p>Upon return, the value pointed to by tag_bytes will contain the old tag size. The new tag size will take effect in the next superstep, so that messages sent in this superstep will have the old tag size. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_bytes</span></code>: A pointer to the tag size, in bytes</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h3>ebsp_get_tagsize<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv316ebsp_get_tagsizev">
+<span id="_CPPv216ebsp_get_tagsizev"></span><span class="target" id="e__bsp_8h_1a47cf6f4bc4ee48eddc146f52d7eb8f95"></span>int <code class="descname">ebsp_get_tagsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the tag size. </p>
+<p><p>This function gets the tag size currently in use. This tagsize remains valid until the start of the next superstep. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The tag size in bytes</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-send">
+<h3>bsp_send<a class="headerlink" href="#bsp-send" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv38bsp_sendiPKvPKvi">
+<span id="_CPPv28bsp_sendiPKvPKvi"></span><span id="bsp_send__i.voidCP.voidCP.i"></span><span class="target" id="e__bsp_8h_1a2d79a679686a5357acc6ba936ec60017"></span>void <code class="descname">bsp_send</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv38bsp_sendiPKvPKvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Send a message to another processor. </p>
+<p><p>This will send a message to the target processor, using the message passing system. The tag size can be obtained by ebsp_get_tagsize. When this function returns, the data has been copied so the user can use the buffer for other purposes. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor (this is allowed to be the id of the sending processor) </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the tag data </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the data payload</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-qsize">
+<h3>bsp_qsize<a class="headerlink" href="#bsp-qsize" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv39bsp_qsizePiPi">
+<span id="_CPPv29bsp_qsizePiPi"></span><span id="bsp_qsize__iP.iP"></span><span class="target" id="e__bsp_8h_1ae2fc27ea113832763a241d165e3ea30c"></span>void <code class="descname">bsp_qsize</code><span class="sig-paren">(</span>int *<em>packets</em>, int *<em>accum_bytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv39bsp_qsizePiPi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain The number of messages in the queue and the combined size in bytes of their data. </p>
+<p><p>Upon return, the integers pointed to by packets and accum_bytes will hold the number of messages in the queue, and the sum of the sizes of their data payloads respectively. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">packets</span></code>: A pointer to an integer which will be overwritten with the number of messages </li>
+<li><code class="docutils literal notranslate"><span class="pre">accum_bytes</span></code>: A pointer to an integer which will be overwritten with the combined number of bytes of the message data.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-get-tag">
+<h3>bsp_get_tag<a class="headerlink" href="#bsp-get-tag" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv311bsp_get_tagPiPv">
+<span id="_CPPv211bsp_get_tagPiPv"></span><span id="bsp_get_tag__iP.voidP"></span><span class="target" id="e__bsp_8h_1a808006e4c1d86e97d8c7a761010fb9e1"></span>void <code class="descname">bsp_get_tag</code><span class="sig-paren">(</span>int *<em>status</em>, void *<em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv311bsp_get_tagPiPv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the tag and size of the next message without popping the message. </p>
+<p><p>Upon return, the integer pointed to by status will receive the size of the data payload in bytes of the next message in the queue. If there is no next message it will be set to -1. The buffer pointed to by tag should be large enough to store the tag. The minimum size can be obtained by calling ebsp_get_tagsize. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">status</span></code>: A pointer to an integer receiving the message data size in bytes. </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to a buffer receiving the message tag</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-move">
+<h3>bsp_move<a class="headerlink" href="#bsp-move" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv38bsp_movePvi">
+<span id="_CPPv28bsp_movePvi"></span><span id="bsp_move__voidP.i"></span><span class="target" id="e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"></span>void <code class="descname">bsp_move</code><span class="sig-paren">(</span>void *<em>payload</em>, int <em>buffer_size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv38bsp_movePvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the next message from the message queue and pop the message. </p>
+<p><p>This will copy the payload and pop the message from the queue. The size of the payload can be obtained by calling </p>
+<a class="reference internal" href="../mp/#e__bsp_8h_1a808006e4c1d86e97d8c7a761010fb9e1"><span class="std std-ref">bsp_get_tag()</span></a>. If <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> is smaller than the data payload then the data is truncated. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to a buffer receiving the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">buffer_size</span></code>: The size of the buffer</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-hpmove">
+<h3>bsp_hpmove<a class="headerlink" href="#bsp-hpmove" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv310bsp_hpmovePPvPPv">
+<span id="_CPPv210bsp_hpmovePPvPPv"></span><span id="bsp_hpmove__voidPP.voidPP"></span><span class="target" id="e__bsp_8h_1a932e0b8b2e82f5ee402adecee0e921dc"></span>int <code class="descname">bsp_hpmove</code><span class="sig-paren">(</span>void **<em>tag_ptr_buf</em>, void **<em>payload_ptr_buf</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv310bsp_hpmovePPvPPv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the next message, with tag, from the queue and pop the message. </p>
+<p><p>This function will give the user direct pointers to the tag and data of the message. This avoids the data copy as done in </p>
+<a class="reference internal" href="../mp/#e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"><span class="std std-ref">bsp_move()</span></a>.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The number of bytes of the payload data</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_ptr_buf</span></code>: A pointer to a pointer receiving the location of the tag </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload_ptr_buf</span></code>: A pointer to a pointer receiving the location of the data pyaload </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>that both tag and payload can be stored in external memory. Repeated use of these tags will lead to overall worse performance, such that <a class="reference internal" href="../mp/#e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"><span class="std std-ref">bsp_move()</span></a> can actually outperform this variant. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-stream-open">
+<h3>bsp_stream_open<a class="headerlink" href="#bsp-stream-open" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv315bsp_stream_openP11ebsp_streami">
+<span id="_CPPv215bsp_stream_openP11ebsp_streami"></span><span id="bsp_stream_open__ebsp_streamP.i"></span><span class="target" id="e__bsp_8h_1a4afd821ffa428a5c21e4db004e2d2f2f"></span>int <code class="descname">bsp_stream_open</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, int <em>stream_id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv315bsp_stream_openP11ebsp_streami" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Open a stream that was created using <code class="docutils literal notranslate"><span class="pre">bsp_stream_create</span></code> on the host. </p>
+<p><p>The first stream created by the host will have </p>
+<code class="docutils literal notranslate"><span class="pre">stream_id</span></code> 0.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>Nonzero if succesful.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: Pointer to an existing <code class="docutils literal notranslate"><span class="pre">bsp_stream</span></code> struct to hold the stream data. This struct can be allocated on the stack by the user. </li>
+<li><code class="docutils literal notranslate"><span class="pre">stream_id</span></code>: The index of the stream. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Usage example: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>bsp_stream mystream;
+if( bsp_stream_open(&amp;mystream, 3) ) {
+    // Get some data
+    void* buffer = 0;
+    bsp_stream_move_down(&amp;mystream, &amp;buffer, 0);
+    // The data is now in buffer
+    // Finally, close the stream
+    bsp_stream_close(&amp;mystream);`
+}
+</pre></div>
+</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>This function has to be called <em>before</em> performing any other operation on the stream. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>A call to the function should always match a single call to <code class="docutils literal notranslate"><span class="pre">bsp_stream_close</span></code>. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-stream-close">
+<h3>bsp_stream_close<a class="headerlink" href="#bsp-stream-close" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv316bsp_stream_closeP11ebsp_stream">
+<span id="_CPPv216bsp_stream_closeP11ebsp_stream"></span><span id="bsp_stream_close__ebsp_streamP"></span><span class="target" id="e__bsp_8h_1acab67dc209d2b6fba1650292b97f73ff"></span>void <code class="descname">bsp_stream_close</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv316bsp_stream_closeP11ebsp_stream" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Wait for pending transfers to complete and close a stream. </p>
+<p><p>Behaviour is undefined if </p>
+<code class="docutils literal notranslate"><span class="pre">stream</span></code> is not a handle opened by <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream, opened by <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Cleans up the stream, and frees any buffers that may have been used by the stream. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-stream-move-up">
+<h3>bsp_stream_move_up<a class="headerlink" href="#bsp-stream-move-up" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv318bsp_stream_move_upP11ebsp_streamPKvii">
+<span id="_CPPv218bsp_stream_move_upP11ebsp_streamPKvii"></span><span id="bsp_stream_move_up__ebsp_streamP.voidCP.i.i"></span><span class="target" id="e__bsp_8h_1a4678a61cc1a9eae55c55d890046410ce"></span>int <code class="descname">bsp_stream_move_up</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, <em class="property">const</em> void *<em>data</em>, int <em>data_size</em>, int <em>wait_for_completion</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv318bsp_stream_move_upP11ebsp_streamPKvii" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Write a local token up to a stream. </p>
+<p><p>The function </p>
+<em>always</em> waits for the previous token to have finished.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>Number of bytes written. Zero if an error has occurred.</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">data</span></code>: The data to be sent up the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">data_size</span></code>: The size of the data to be sent, i.e. the size of the token. Behaviour is undefined if it is not a multiple of 8. If it is not a multiple of 8 bytes then transfers will be slow. </li>
+<li><code class="docutils literal notranslate"><span class="pre">wait_for_completion</span></code>: If nonzero this function blocks untill the data is completely written to the stream. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">wait_for_completion</span></code> is nonzero, this function will wait untill the data is transferred. This corresponds to single buffering.</p>
+<p>Alternativly, double buffering can be used as follows. Set <code class="docutils literal notranslate"><span class="pre">wait_for_completion</span></code> to zero and continue constructing the next token in a different buffer. Usage example: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="o">*</span> <span class="n">buf1</span> <span class="o">=</span> <span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">));</span>
+<span class="nb">int</span><span class="o">*</span> <span class="n">buf2</span> <span class="o">=</span> <span class="n">ebsp_malloc</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">));</span>
+<span class="nb">int</span><span class="o">*</span> <span class="n">curbuf</span> <span class="o">=</span> <span class="n">buf1</span><span class="p">;</span>
+<span class="nb">int</span><span class="o">*</span> <span class="n">otherbuf</span> <span class="o">=</span> <span class="n">buf2</span><span class="p">;</span>
+
+<span class="n">ebsp_stream</span> <span class="n">s</span><span class="p">;</span>
+<span class="n">bsp_stream_open</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="o">//</span> <span class="nb">open</span> <span class="n">stream</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span> <span class="n">Fill</span> <span class="n">curbuf</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">curbuf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    
+    <span class="o">//</span> <span class="n">Send</span> <span class="n">up</span>
+    <span class="n">bsp_stream_move_up</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="n">curbuf</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="o">//</span> <span class="n">Use</span> <span class="n">other</span> <span class="n">buffer</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">curbuf</span><span class="p">,</span> <span class="n">otherbuf</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">ebsp_free</span><span class="p">(</span><span class="n">buf1</span><span class="p">);</span>
+<span class="n">ebsp_free</span><span class="p">(</span><span class="n">buf2</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Behaviour is undefined if the stream was not opened using <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>Memory is transferred using the <code class="docutils literal notranslate"><span class="pre">DMA1</span></code> engine. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-stream-move-down">
+<h3>bsp_stream_move_down<a class="headerlink" href="#bsp-stream-move-down" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv320bsp_stream_move_downP11ebsp_streamPPvi">
+<span id="_CPPv220bsp_stream_move_downP11ebsp_streamPPvi"></span><span id="bsp_stream_move_down__ebsp_streamP.voidPP.i"></span><span class="target" id="e__bsp_8h_1aa23b8ef4ae753261dea1a7c17c8734d1"></span>int <code class="descname">bsp_stream_move_down</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, void **<em>buffer</em>, int <em>preload</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv320bsp_stream_move_downP11ebsp_streamPPvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain the next token from a stream. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>Number of bytes of the obtained chunk. If stream has finished or an error has occurred this function will return <code class="docutils literal notranslate"><span class="pre">0</span></code>.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>Behaviour is undefined if the stream was not opened using <code class="docutils literal notranslate"><span class="pre">bsp_stream_open</span></code>. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>Memory is transferred using the <code class="docutils literal notranslate"><span class="pre">DMA1</span></code> engine. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>When using double buffering, the BSP system will allocate memory for the next chunk, and will start writing to it using the DMA engine while the current chunk is processed. This requires more (local) memory, but can greatly increase the overall speed. </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">buffer</span></code>: Receives a pointer to a local copy of the next token. </li>
+<li><code class="docutils literal notranslate"><span class="pre">preload</span></code>: If this parameter is nonzero then the BSP system will preload the next token asynchroneously (double buffering). </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="bsp-stream-seek">
+<h3>bsp_stream_seek<a class="headerlink" href="#bsp-stream-seek" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv315bsp_stream_seekP11ebsp_streami">
+<span id="_CPPv215bsp_stream_seekP11ebsp_streami"></span><span id="bsp_stream_seek__ebsp_streamP.i"></span><span class="target" id="e__bsp_8h_1aac6a2e9041be25b8903b6bb7c564186e"></span>void <code class="descname">bsp_stream_seek</code><span class="sig-paren">(</span>ebsp_stream *<em>stream</em>, int <em>delta_tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv315bsp_stream_seekP11ebsp_streami" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Move the cursor in the stream, to change the next token to be obtained. </p>
+<p><p>If </p>
+<code class="docutils literal notranslate"><span class="pre">delta_tokens</span></code> is out of bounds, then the cursor will be moved to the start or end of the stream respectively. <code class="docutils literal notranslate"><span class="pre">bsp_stream_seek(i,</span> <span class="pre">INT_MIN)</span></code> will set the cursor to the start <code class="docutils literal notranslate"><span class="pre">bsp_stream_seek(i,</span> <span class="pre">INT_MAX)</span></code> will set the cursor to the end of the stream<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">stream</span></code>: The handle of the stream </li>
+<li><code class="docutils literal notranslate"><span class="pre">delta_tokens</span></code>: The number of tokens to skip if <code class="docutils literal notranslate"><span class="pre">delta_tokens</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, or to go back if <code class="docutils literal notranslate"><span class="pre">delta_tokens</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Note that if <code class="docutils literal notranslate"><span class="pre">bsp_stream_move_down</span></code> is used with <code class="docutils literal notranslate"><span class="pre">preload</span></code> enabled (meaning the last call to that function had <code class="docutils literal notranslate"><span class="pre">preload</span></code> enabled), then the preloaded token will not be changed, so the first call to <code class="docutils literal notranslate"><span class="pre">bsp_stream_move_down</span></code> after this will still yield a token from the previous position. If <code class="docutils literal notranslate"><span class="pre">preload</span></code> was not enabled then the next call to <code class="docutils literal notranslate"><span class="pre">bsp_stream_move_down</span></code> will yield a token from the new position.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>This function provides a mechanism through which chunks can be obtained multiple times. It gives you random access in the memory in the data stream. </dd>
+<dt><strong>Remark</strong></dt>
+<dd>This function has <code class="docutils literal notranslate"><span class="pre">O(delta_tokens)</span></code> complexity. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../bsp/" class="btn btn-neutral" title="BSP Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

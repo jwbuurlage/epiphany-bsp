@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Other features &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Output" href="../output/" />
+    <link rel="prev" title="Data streams" href="../streaming/" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="../_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction and Setting up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/">Getting started: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../variables/">BSP Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mp/">Message Passing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../host_client/">Communicating with the Epiphany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../streaming/">Data streams</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Other features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#timers">Timers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interrupts">Interrupts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-timer-and-callback">Interface (Timer and callback)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#host">Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#epiphany">Epiphany</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../output/">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory_management/">Memory Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memory_details/">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsp/">BSP Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../">Docs</a> &raquo;</li>
+        
+      <li>Other features</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/other_features.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="other-features">
+<h1>Other features<a class="headerlink" href="#other-features" title="Permalink to this headline">¶</a></h1>
+<p>There are two features we did not yet discuss. The first is timers, which are useful for getting information on the running time of your programs. The second is intervening in programs that are currently running on the Epiphany using the host.</p>
+<div class="section" id="timers">
+<h2>Timers<a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h2>
+<p>We provide two mechanisms for getting running time information. The first uses the first timer (of the two) on the Epiphany core and is accurate for relatively short time intervals (less than about 7 seconds). It is used in the following manner:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span> <span class="n">t_start</span> <span class="o">=</span> <span class="n">bsp_time</span><span class="p">();</span>
+<span class="c1">// ... perform computation</span>
+<span class="kt">float</span> <span class="n">t_end</span> <span class="o">=</span> <span class="n">bsp_time</span><span class="p">();</span>
+<span class="kt">float</span> <span class="n">result</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The variable result than holds the time taken for the computation in seconds. If you want access to the number of clockcycles used for the computation we provide a similar function <a class="reference internal" href="#ebsp-raw-time"><span class="std std-ref">ebsp_raw_time()</span></a> which gives the number of clockcycles as an unsigned integer:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">t_start</span> <span class="o">=</span> <span class="n">bsp_raw_time</span><span class="p">();</span>
+<span class="c1">// ... perform computation</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">t_end</span> <span class="o">=</span> <span class="n">bsp_raw_time</span><span class="p">();</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note that the default Epiphany clockfrequency is about 600 MHz, such that 600000000 cycles is equal to one second.</p>
+<p>Note that there are two separate timers available on the Epiphany cores, identified by <code class="docutils literal notranslate"><span class="pre">E_CTIMER_0</span></code> and <code class="docutils literal notranslate"><span class="pre">E_CTIMER_1</span></code>. The Epiphany BSP library will only use <code class="docutils literal notranslate"><span class="pre">E_CTIMRE_0</span></code> so you are free to use the other timer in any way you require, using the Epiphany SDK.</p>
+<p>The second method uses the system clock of the host to obtain the elapsed time. Because of varying amounts of latency this can be very inaccurate (its precision is in the order of milliseconds), but supports time intervals of arbitrary length. This timer can be used by calling the function <code class="docutils literal notranslate"><span class="pre">ebsp_host_time()</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span> <span class="n">t_start</span> <span class="o">=</span> <span class="n">ebsp_host_time</span><span class="p">();</span>
+<span class="c1">// ... perform (long) computation</span>
+<span class="kt">float</span> <span class="n">t_end</span> <span class="o">=</span> <span class="n">ebsp_host_time</span><span class="p">();</span>
+<span class="kt">float</span> <span class="n">result</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interrupts">
+<h2>Interrupts<a class="headerlink" href="#interrupts" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to set up interrupt handlers using the Epiphany SDK functionality. The only interrupt that is explicitely and necessarily handled by the EBSP library is <code class="docutils literal notranslate"><span class="pre">E_DMA1_INT</span></code>. For more information on the using the DMA engine, see the section on memory management. There is a timer interrupt that can be used if needed. The Epiphany BSP library uses neither of the two timre interrupts. The maximum number of cycles that can be counted using the raw timer is <code class="docutils literal notranslate"><span class="pre">UINT_MAX</span></code> which is roughly 7 seconds on the 600 MHz cores. After reaching this maximum value, an interrupt will be fired.</p>
+</div>
+<div class="section" id="callbacks">
+<h2>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h2>
+<p>If you want to use the host processor together with the Epiphany processor, you require some sort of syncing mechanism. In particular you might want to react to data that has been sent to external memory, or use the ARM in a map-reduce kind of setting. For this we provide a callback mechanism using <code class="docutils literal notranslate"><span class="pre">ebsp_set_sync_callback</span></code>. You can provide a function pointer, and this function will get called each time a core calls <code class="docutils literal notranslate"><span class="pre">ebsp_host_sync</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// on the host</span>
+<span class="kt">void</span> <span class="nf">callback</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;ebsp_host_sync called on the Epiphany&quot;</span><span class="p">);</span>
+    <span class="c1">// communicate with cores or react to data</span>
+<span class="p">}</span>
+
+<span class="p">..</span>
+<span class="n">bsp_begin</span><span class="p">(</span><span class="n">bsp_nprocs</span><span class="p">());</span>
+<span class="n">ebsp_set_sync_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">);</span>
+<span class="p">..</span>
+</pre></div>
+</div>
+<p>Similarly we provide a callback mechanism for <code class="docutils literal notranslate"><span class="pre">bsp_end</span></code>, which can be useful when developing your own library on top of EBSP.</p>
+</div>
+<div class="section" id="interface-timer-and-callback">
+<h2>Interface (Timer and callback)<a class="headerlink" href="#interface-timer-and-callback" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="host">
+<h3>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv322ebsp_set_sync_callbackPFvvE">
+<span id="_CPPv222ebsp_set_sync_callbackPFvvE"></span><span class="target" id="host__bsp_8h_1ad542fb7eba809cad18949b672708545b"></span>void <code class="descname">ebsp_set_sync_callback</code><span class="sig-paren">(</span>void (*<em>cb</em>)<span class="sig-paren">(</span><span class="sig-paren">)</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the (optional) callback for synchronizing epiphany cores with the host program. </p>
+<p><p>This callback is called when all Epiphany cores have called ebsp_host_sync(). Note that this does not happen at bsp_sync(). </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">cb</span></code>: A function pointer to the callback function</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv321ebsp_set_end_callbackPFvvE">
+<span id="_CPPv221ebsp_set_end_callbackPFvvE"></span><span class="target" id="host__bsp_8h_1a96ce8db901942447741ee8d2ace5d161"></span>void <code class="descname">ebsp_set_end_callback</code><span class="sig-paren">(</span>void (*<em>cb</em>)<span class="sig-paren">(</span><span class="sig-paren">)</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the (optional) callback for finalizing. </p>
+<p><p>This callback is called when </p>
+<a class="reference internal" href="../basic/#host__bsp_8h_1a12385c882b6096484952fe7acad958bd"><span class="std std-ref">ebsp_spmd()</span></a> finishes. It is primarily used by the ebsp memory inspector and should not be needed. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">cb</span></code>: A function pointer to the callback function</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="epiphany">
+<h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv38bsp_timev">
+<span id="_CPPv28bsp_timev"></span><span id="bsp_time"></span><span class="target" id="e__bsp_8h_1a6ee4e522d55605dc51db6ea33c06c3c2"></span>float <code class="descname">bsp_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the time in seconds since <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a> was called. </p>
+<p><p>The native Epiphany timer does not support time differences longer than </p>
+<code class="docutils literal notranslate"><span class="pre">UINT_MAX/(600000000)</span></code> which is roughly 7 seconds.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A floating point value with the number of elapsed seconds since the call to <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a></dd>
+</dl>
+</p>
+<p>If you want to measure longer time intervals, we suggest you use the (less accurate) <a class="reference internal" href="#e__bsp_8h_1aeb45a09e9b589b1fdc7ede2f84d612db"><span class="std std-ref">ebsp_host_time()</span></a>.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Using this in combination with <a class="reference internal" href="#e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"><span class="std std-ref">ebsp_raw_time()</span></a> leads to unspecified behaviour, you should only use one of these in your program.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>This uses the internal Epiphany <code class="docutils literal notranslate"><span class="pre">E_CTIMER_0</span></code> timer so the second timer can be used for other purposes. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<span class="target" id="ebsp-raw-time"></span><dl class="function">
+<dt id="_CPPv313ebsp_raw_timev">
+<span id="_CPPv213ebsp_raw_timev"></span><span id="ebsp_raw_time"></span><span class="target" id="e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"></span>unsigned int <code class="descname">ebsp_raw_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the number of clockcycles that have passed since the previous call to <a class="reference internal" href="#e__bsp_8h_1a1bd7bfc11868632a4bbfb471bd717df2"><span class="std std-ref">ebsp_raw_time()</span></a>. </p>
+<p><p>This function has less overhead than bsp_time.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>An unsigned integer with the number of clockcycles</dd>
+</dl>
+</p>
+<p>Divide the number of clockcycles by 600 000 000 to get the time in seconds.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>Using this in combination with <a class="reference internal" href="#e__bsp_8h_1a6ee4e522d55605dc51db6ea33c06c3c2"><span class="std std-ref">bsp_time()</span></a> leads to unspecified behaviour, you should only use one of these in your program.</dd>
+<dt><strong>Remark</strong></dt>
+<dd>This uses the internal Epiphany <code class="docutils literal notranslate"><span class="pre">E_CTIMER_0</span></code> timer so the second timer can be used for other purposes. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv314ebsp_host_timev">
+<span id="_CPPv214ebsp_host_timev"></span><span id="ebsp_host_time"></span><span class="target" id="e__bsp_8h_1aeb45a09e9b589b1fdc7ede2f84d612db"></span>float <code class="descname">ebsp_host_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the time in seconds since <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a> was called. </p>
+<p><p>This function uses the system clock of the host to obtain the elapsed time. Because of varying amounts of latency this can be very inaccurate (its precision is in the order of milliseconds), but it supports time intervals of arbitrary length. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A floating point value with the number of seconds since <a class="reference internal" href="../basic/#e__bsp_8h_1ab7077f80f8aeb6d4c0a507c6c755b520"><span class="std std-ref">bsp_begin()</span></a></dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../output/" class="btn btn-neutral float-right" title="Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../streaming/" class="btn btn-neutral" title="Data streams" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

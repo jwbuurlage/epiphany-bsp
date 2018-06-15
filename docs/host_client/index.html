@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Communicating with the Epiphany &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Data streams" href="../streaming/" />
+    <link rel="prev" title="Message Passing" href="../mp/" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="../_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction and Setting up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/">Getting started: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../variables/">BSP Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mp/">Message Passing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Communicating with the Epiphany</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#communication-up-and-down">Communication: up and down</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-vertical-communication">Interface (Vertical communication)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#host">Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#epiphany">Epiphany</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../streaming/">Data streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_features/">Other features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../output/">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory_management/">Memory Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memory_details/">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsp/">BSP Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../">Docs</a> &raquo;</li>
+        
+      <li>Communicating with the Epiphany</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/host_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="communicating-with-the-epiphany">
+<h1>Communicating with the Epiphany<a class="headerlink" href="#communicating-with-the-epiphany" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="communication-up-and-down">
+<h2>Communication: up and down<a class="headerlink" href="#communication-up-and-down" title="Permalink to this headline">¶</a></h2>
+<p>Writing kernels for the Epiphany is only useful when you can provide them with data to process. The easiest way to send data from the host program running on the host processor to the Epiphany cores is completely analogous to message passing between cores. So far the code we have written on the host only initializes the BSP system, starts the SPMD program on the Epiphany, and finalizes the system afterwards. Before the call to <code class="docutils literal notranslate"><span class="pre">ebsp_spmd</span></code> we can prepare messages containing e.g. initial data for the Epiphany cores. This works completely identically to inter-core message passing, using <code class="docutils literal notranslate"><span class="pre">ebsp_set_tagsize</span></code> instead of <code class="docutils literal notranslate"><span class="pre">bsp_set_tagsize</span></code>, and <code class="docutils literal notranslate"><span class="pre">ebsp_send_down</span></code> instead of <code class="docutils literal notranslate"><span class="pre">bsp_send</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// file: host_code.c</span>
+<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">tagsize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+<span class="n">ebsp_set_tagsize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tagsize</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">tag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">payload</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">+</span> <span class="n">s</span><span class="p">;</span>
+    <span class="n">ebsp_send_down</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tag</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These messages are available like any other on the Epiphany cores, but only between the call to <code class="docutils literal notranslate"><span class="pre">bsp_begin</span></code> and the first call to <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code>. So on the Epiphany cores we can read the messages using:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// file: ecore_code.c</span>
+
+<span class="n">bsp_begin</span><span class="p">();</span>
+
+<span class="c1">// here the messages from the host are available</span>
+<span class="kt">int</span> <span class="n">packets</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">accum_bytes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">bsp_qsize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">packets</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">accum_bytes</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">payload_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">payload_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">tag_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">packets</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">bsp_get_tag</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_size</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tag_in</span><span class="p">);</span>
+    <span class="n">bsp_move</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_in</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">ebsp_message</span><span class="p">(</span><span class="s">&quot;payload: %i, tag: %i&quot;</span><span class="p">,</span> <span class="n">payload_in</span><span class="p">,</span> <span class="n">tag_in</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// after this call the messages are invalidated</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+<span class="p">...</span> <span class="c1">// remainder of the program, see below</span>
+</pre></div>
+</div>
+<p>Resulting in the output:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>$00: payload: 1000, tag: 1
+$03: payload: 1003, tag: 1
+$02: payload: 1002, tag: 1
+$13: payload: 1013, tag: 1
+...
+</pre></div>
+</div>
+<p>A similar method can be used to send data up (from the Epiphany cores to the host). If you have followed along with our discussion so far the second half of the kernel code should be self explanatory:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// file: ecore_code.c</span>
+<span class="p">...</span> <span class="c1">// obtain initial data, see above</span>
+
+<span class="kt">int</span> <span class="n">payload</span> <span class="o">=</span> <span class="n">payload_in</span> <span class="o">+</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+<span class="n">ebsp_send_up</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tag</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+
+<span class="n">bsp_end</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Note that now we are using our processor number as the tag, such that the host can use the tag to differentiate between messages coming from different cores. Usage of <code class="docutils literal notranslate"><span class="pre">ebsp_send_up</span></code> is limited to the final superstep, i.e. between the last call to <code class="docutils literal notranslate"><span class="pre">bsp_sync</span></code> and the call to <code class="docutils literal notranslate"><span class="pre">bsp_end</span></code>. In the host program we can read the resulting messages similarly to how we read them on the Epiphany processor:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// file: host_code.c</span>
+
+<span class="p">...</span>
+<span class="n">ebsp_spmd</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">packets</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">accum_bytes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">ebsp_qsize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">packets</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">accum_bytes</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">payload_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">payload_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">tag_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">packets</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ebsp_get_tag</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_size</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tag_in</span><span class="p">);</span>
+    <span class="n">ebsp_move</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_in</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;payload: %i, tag: %i&quot;</span><span class="p">,</span> <span class="n">payload_in</span><span class="p">,</span> <span class="n">tag_in</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">ebsp_end</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This gives the output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>payload: 2001, tag: 1
+payload: 2013, tag: 13
+payload: 2003, tag: 3
+payload: 2002, tag: 2
+...
+</pre></div>
+</div>
+<p>For the first time we have written data to the cores, applied a transformation to the data using the Epiphany cores, and sent it back up to the host program.</p>
+<p>Message passing is a nice way to get initial data to the Epiphany cores, and to get the results of computations back to the host. However, it is very restrictive, and does not give the user a lot of control over the way the data gets sent down. An alternative approach is given by <code class="docutils literal notranslate"><span class="pre">ebsp_write</span></code> and <code class="docutils literal notranslate"><span class="pre">ebsp_read</span></code>. These calls require manually addressing the local memory on each core. Every core has 32kb of local memory, corresponding to addresses <code class="docutils literal notranslate"><span class="pre">0x0000</span></code> to <code class="docutils literal notranslate"><span class="pre">0x8000</span></code>. The default settings of EBSP put the program data at the start of this space (i.e. at <code class="docutils literal notranslate"><span class="pre">0x0000</span></code>), and the stack moves downwards from the end (i.e. at <code class="docutils literal notranslate"><span class="pre">0x8000</span></code>). Using <code class="docutils literal notranslate"><span class="pre">ebsp_write</span></code> from the host program, you can prepare data at specific spaces on the local cores:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span> <span class="p">};</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ebsp_write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="mh">0x5000</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This would write 4 integers to each core starting at <code class="docutils literal notranslate"><span class="pre">0x5000</span></code>. Similarly, <code class="docutils literal notranslate"><span class="pre">ebsp_read</span></code> can be used to retrieve data from the cores. We would not recommend this approach for users just beginning with the Parallella and EBSP in particular. A better approach to move large amounts of data from and to the Epiphany processor uses <em>data streams</em>, which will be introduced in the next EBSP release. This allows data to be moved in predetermined <em>chunks</em>, which are acted upon independently. We will explain this approach in detail in a future blogpost.</p>
+</div>
+<div class="section" id="interface-vertical-communication">
+<h2>Interface (Vertical communication)<a class="headerlink" href="#interface-vertical-communication" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="host">
+<h3>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv310ebsp_qsizePiPi">
+<span id="_CPPv210ebsp_qsizePiPi"></span><span id="ebsp_qsize__iP.iP"></span><span class="target" id="host__bsp_8h_1a0dc8a00e88a2ecb254bde2ec8665159e"></span>void <code class="descname">ebsp_qsize</code><span class="sig-paren">(</span>int *<em>packets</em>, int *<em>accum_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Get the amount of messages in the queue and their total size in bytes. </p>
+<p><p>Use only for gathering result messages at the end of a BSP program. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">packets</span></code>: A pointer to an integer receiving the number of messages </li>
+<li><code class="docutils literal notranslate"><span class="pre">accum_bytes</span></code>: The total size of the data payloads of the messages, in bytes.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv316ebsp_set_tagsizePi">
+<span id="_CPPv216ebsp_set_tagsizePi"></span><span id="ebsp_set_tagsize__iP"></span><span class="target" id="host__bsp_8h_1a27bb2cce1a92dbf95ab28ea662216370"></span>void <code class="descname">ebsp_set_tagsize</code><span class="sig-paren">(</span>int *<em>tag_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set initial tagsize for message passing. </p>
+<p><p>The default tagsize is zero. This function should be called at most once, before any messages are sent. Calling this when receiving messages results in undefined behaviour.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_bytes</span></code>: A pointer to an integer containing the new tagsize, receiving the old tagsize on return.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>It is not possible to send messages with different tag sizes. Doing so will result in undefined behaviour.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>The tagsize set using this function is also used for inter-core messages. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv316ebsp_get_tagsizev">
+<span id="_CPPv216ebsp_get_tagsizev"></span><span id="ebsp_get_tagsize"></span><span class="target" id="host__bsp_8h_1a47cf6f4bc4ee48eddc146f52d7eb8f95"></span>int <code class="descname">ebsp_get_tagsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Get the tagsize as set by the Epiphany program. </p>
+<p><p>Use only for gathering result messages at the end of a BSP program.</p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The tagsize in bytes</dd>
+</dl>
+</p>
+<p>When <a class="reference internal" href="../basic/#host__bsp_8h_1a12385c882b6096484952fe7acad958bd"><span class="std std-ref">ebsp_spmd()</span></a> returns, the Epiphany program can have set a different tagsize which can be obtained using this function. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv314ebsp_send_downiPKvPKvi">
+<span id="_CPPv214ebsp_send_downiPKvPKvi"></span><span id="ebsp_send_down__i.voidCP.voidCP.i"></span><span class="target" id="host__bsp_8h_1ae51209685120c4965c41b2056fee1872"></span>void <code class="descname">ebsp_send_down</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Send a message to the Epiphany cores. </p>
+<p><p>This is the preferred way to send initial data (for computation) to the Epiphany cores.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the message tag </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the payload in bytes</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>The size of the buffer pointed to by tag has to be <code class="docutils literal notranslate"><span class="pre">tagsize</span></code>, and must be the same for every message being sent. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv310ebsp_writeiPv5off_ti">
+<span id="_CPPv210ebsp_writeiPv5off_ti"></span><span id="ebsp_write__i.voidP.off_t.i"></span><span class="target" id="host__bsp_8h_1a00f9d9253d6ffa496ee041955689c99a"></span>int <code class="descname">ebsp_write</code><span class="sig-paren">(</span>int <em>pid</em>, void *<em>src</em>, off_t <em>dst</em>, int <em>size</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Write data to the Epiphany processor. </p>
+<p><p>This is an alternative to the BSP Message Passing system. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: A pointer to the source data </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: The destination address (as seen by the Epiphany core) </li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: The amount of bytes to be copied </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv39ebsp_readi5off_tPvi">
+<span id="_CPPv29ebsp_readi5off_tPvi"></span><span id="ebsp_read__i.off_t.voidP.i"></span><span class="target" id="host__bsp_8h_1a65423fcb58e7d782c3914a8689dc527f"></span>int <code class="descname">ebsp_read</code><span class="sig-paren">(</span>int <em>pid</em>, off_t <em>src</em>, void *<em>dst</em>, int <em>size</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Read data from the Epiphany processor. </p>
+<p><p>This is an alternative to the BSP Message Passing system. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>1 on success, 0 on failure</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the source processor </li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code>: The source address (as seen by the Epiphany core) </li>
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code>: A pointer to a buffer receiving the data </li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: The amount of bytes to be copied </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="epiphany">
+<h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv312ebsp_send_upPKvPKvi">
+<span id="_CPPv212ebsp_send_upPKvPKvi"></span><span id="ebsp_send_up__voidCP.voidCP.i"></span><span class="target" id="e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"></span>void <code class="descname">ebsp_send_up</code><span class="sig-paren">(</span><em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv312ebsp_send_upPKvPKvi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Send a message to the host processor after the computation is finished. </p>
+<p><p>This will send a message back to the host after a computation. It is used to tranfer any results.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the tag data </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the data</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>When this function returns, the data has been copied so the user can use the buffer for other purposes.</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd><ul class="simple">
+<li><a class="reference internal" href="#e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"><span class="std std-ref">ebsp_send_up()</span></a> should an only be used between the last call to <a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a> and <a class="reference internal" href="../basic/#e__bsp_8h_1ad794334e180b711537499871020a76fe"><span class="std std-ref">bsp_end()</span></a></li>
+<li><a class="reference internal" href="#e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"><span class="std std-ref">ebsp_send_up()</span></a> should only be used when no <a class="reference internal" href="../mp/#e__bsp_8h_1a2d79a679686a5357acc6ba936ec60017"><span class="std std-ref">bsp_send()</span></a> messages have been passed after the last <a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a></li>
+<li>after calling <a class="reference internal" href="#e__bsp_8h_1a123ebda609339b79f9a05b1e5dd856b8"><span class="std std-ref">ebsp_send_up()</span></a> at least once, a call to any other queue functions or to <a class="reference internal" href="../variables/#e__bsp_8h_1ad8dbbc296f5b775f4089b8320e7e82c1"><span class="std std-ref">bsp_sync()</span></a> will lead to undefined behaviour </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../streaming/" class="btn btn-neutral float-right" title="Data streams" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../mp/" class="btn btn-neutral" title="Message Passing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

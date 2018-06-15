@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59249373-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Message Passing &mdash; Epiphany BSP 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Communicating with the Epiphany" href="../host_client/" />
+    <link rel="prev" title="BSP Variables" href="../variables/" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../" class="icon icon-home"> Epiphany BSP
+          
+
+          
+            
+            <img src="../_static/coduin_logo_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction and Setting up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/">Getting started: The Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../variables/">BSP Variables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Message Passing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sending-and-receiving-messages">Sending and receiving messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-messages">Interface (Messages)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#epiphany">Epiphany</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../host_client/">Communicating with the Epiphany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../streaming/">Data streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_features/">Other features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../output/">Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory_management/">Memory Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference &amp; Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memory_details/">Parallella Memory Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsp/">BSP Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Epiphany BSP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../">Docs</a> &raquo;</li>
+        
+      <li>Message Passing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="message-passing">
+<h1>Message Passing<a class="headerlink" href="#message-passing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sending-and-receiving-messages">
+<h2>Sending and receiving messages<a class="headerlink" href="#sending-and-receiving-messages" title="Permalink to this headline">¶</a></h2>
+<p>The next subject we will discuss is <em>passing messages</em> between Epiphany cores. Message passing provides a way to communicate between cores, without having to register variables. This relies on a <em>message queue</em>, which is available to every processor. Using message passing, you can communicate to other cores without registering variables. This can be very useful when the amount of data varies from core to core, and it is not clear beforehand how the data will be distributed. It is good to keep in mind that message passing is a lot slower than alternative communication methods since it utilizes the <em>external memory</em>.</p>
+<p>A BSP message has a <em>tag</em> and a <em>payload</em>. The <em>tag</em> identifies the message, and the <em>payload</em> contains the acutal data. The size (in bytes) of a tag is universal, i.e. it is the same across all Epiphany cores (as well as the host). The tagsize can be set using <code class="docutils literal notranslate"><span class="pre">bsp_set_tagsize</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">tagsize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+<span class="n">bsp_set_tagsize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tagsize</span><span class="p">);</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The tagsize must be set on each core simultaneously, that is to say in the same <em>superstep</em>. Alternatively, The tagsize can also be set on the host before issuing <code class="docutils literal notranslate"><span class="pre">ebsp_spmd</span></code>. For compatibility reasons, the call to <code class="docutils literal notranslate"><span class="pre">bsp_set_tagsize</span></code> writes the old value for the tagsize to its argument. We also provide an alternative way to obtain the tagsize, by simply calling <code class="docutils literal notranslate"><span class="pre">ebsp_get_tagsize</span></code>.:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">tagsize</span> <span class="o">=</span> <span class="n">ebsp_get_tagsize</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>After setting the tagsize (and synchronizing), we are ready to start sending messages. We can send a message using <code class="docutils literal notranslate"><span class="pre">bsp_send</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">tag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">payload</span> <span class="o">=</span> <span class="mi">42</span> <span class="o">+</span> <span class="n">s</span><span class="p">;</span>
+<span class="n">bsp_send</span><span class="p">((</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tag</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>We first need to declare variables holding the tag and the payload. In our case these are integers, but in general you can use any data type. In order, the arguments of <code class="docutils literal notranslate"><span class="pre">bsp_send</span></code> are:</p>
+<ol class="arabic simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">pid</span></code> of processor we want to <em>send</em> the message to.</li>
+<li>A pointer to the tag data.</li>
+<li>A pointer to the payload data.</li>
+<li>The size of the payload. Note that you can vary this size between every send call, contrary to the tagsize.</li>
+</ol>
+<p>After synchronizing, the target processor can receive the message. To receive messages, we must first inspect the queue:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">packets</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">accum_bytes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">bsp_qsize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">packets</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">accum_bytes</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The call to <code class="docutils literal notranslate"><span class="pre">bsp_qsize</span></code> writes the <em>number of packets</em> to the first argument, and the <em>total number of bytes in the queue</em> to the second argument. Next, we can loop over each packet, <em>moving</em> the packages to the local core:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">payload_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">payload_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">tag_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">packets</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">bsp_get_tag</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_size</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tag_in</span><span class="p">);</span>
+    <span class="n">bsp_move</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_in</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">ebsp_message</span><span class="p">(</span><span class="s">&quot;payload: %i, tag: %i&quot;</span><span class="p">,</span> <span class="n">payload_in</span><span class="p">,</span> <span class="n">tag_in</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We use two new primitives here. First we obtain for each packet (note that here we only have a single packet) the payload size and the incoming tag, using <code class="docutils literal notranslate"><span class="pre">bsp_get_tagsize</span></code>. The payload itself is <em>moved</em> using <code class="docutils literal notranslate"><span class="pre">bsp_move</span></code>. The first argument should point to a buffer large enough to store the payload data, and the second argument is the number of bytes to move. Note that we could use our obtained payload size to allocate a buffer large enough to hold the payload, and we could pass it to the second argument of <code class="docutils literal notranslate"><span class="pre">bsp_move</span></code>. It is good to keep in mind that if less bytes are moved than the size of the payload, the remaining data is thrown away. Here we know all messages contain a single integer, such that we can just write the payload into a local variable directly.</p>
+<p>This code results in the following output:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>$02: payload: 43, tag: 1
+$08: payload: 49, tag: 1
+$00: payload: 57, tag: 1
+$13: payload: 54, tag: 1
+...
+</pre></div>
+</div>
+<p>Message passing is a very general and powerful technique when using variables to communicate proves to restrictive. However, the flexibility of message passing comes with performance penalty, because the buffers that are involved are too large to store on a single core. As before, <code class="docutils literal notranslate"><span class="pre">bsp_hpput</span></code> and <code class="docutils literal notranslate"><span class="pre">bsp_hpget</span></code> should be your preferred way of communicating if you are optimizing for speed.</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>We finish our discussion of inter-core BSP message passing by providing a complete program that sends messages around:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bsp_pid</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bsp_nprocs</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">tagsize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+<span class="n">bsp_set_tagsize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tagsize</span><span class="p">);</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">tag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">payload</span> <span class="o">=</span> <span class="mi">42</span> <span class="o">+</span> <span class="n">s</span><span class="p">;</span>
+<span class="n">bsp_send</span><span class="p">((</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tag</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">bsp_sync</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">packets</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">accum_bytes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">bsp_qsize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">packets</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">accum_bytes</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">payload_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">payload_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">tag_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">packets</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">bsp_get_tag</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_size</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tag_in</span><span class="p">);</span>
+    <span class="n">bsp_move</span><span class="p">(</span><span class="o">&amp;</span><span class="n">payload_in</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">ebsp_message</span><span class="p">(</span><span class="s">&quot;payload: %i, tag: %i&quot;</span><span class="p">,</span> <span class="n">payload_in</span><span class="p">,</span> <span class="n">tag_in</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interface-messages">
+<h2>Interface (Messages)<a class="headerlink" href="#interface-messages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="epiphany">
+<h3>Epiphany<a class="headerlink" href="#epiphany" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv315bsp_set_tagsizePi">
+<span id="_CPPv215bsp_set_tagsizePi"></span><span id="bsp_set_tagsize__iP"></span><span class="target" id="e__bsp_8h_1a1f711c4d860f03a90257f6072d9e70ec"></span>void <code class="descname">bsp_set_tagsize</code><span class="sig-paren">(</span>int *<em>tag_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Set the tag size. </p>
+<p><p>Upon return, the value pointed to by tag_bytes will contain the old tag size. The new tag size will take effect in the next superstep, so that messages sent in this superstep will have the old tag size. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_bytes</span></code>: A pointer to the tag size, in bytes</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv316ebsp_get_tagsizev">
+<span id="_CPPv216ebsp_get_tagsizev"></span><span id="ebsp_get_tagsize"></span><span class="target" id="e__bsp_8h_1a47cf6f4bc4ee48eddc146f52d7eb8f95"></span>int <code class="descname">ebsp_get_tagsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the tag size. </p>
+<p><p>This function gets the tag size currently in use. This tagsize remains valid until the start of the next superstep. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The tag size in bytes</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv38bsp_sendiPKvPKvi">
+<span id="_CPPv28bsp_sendiPKvPKvi"></span><span id="bsp_send__i.voidCP.voidCP.i"></span><span class="target" id="e__bsp_8h_1a2d79a679686a5357acc6ba936ec60017"></span>void <code class="descname">bsp_send</code><span class="sig-paren">(</span>int <em>pid</em>, <em class="property">const</em> void *<em>tag</em>, <em class="property">const</em> void *<em>payload</em>, int <em>nbytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Send a message to another processor. </p>
+<p><p>This will send a message to the target processor, using the message passing system. The tag size can be obtained by ebsp_get_tagsize. When this function returns, the data has been copied so the user can use the buffer for other purposes. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The pid of the target processor (this is allowed to be the id of the sending processor) </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to the tag data </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">nbytes</span></code>: The size of the data payload</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv39bsp_qsizePiPi">
+<span id="_CPPv29bsp_qsizePiPi"></span><span id="bsp_qsize__iP.iP"></span><span class="target" id="e__bsp_8h_1ae2fc27ea113832763a241d165e3ea30c"></span>void <code class="descname">bsp_qsize</code><span class="sig-paren">(</span>int *<em>packets</em>, int *<em>accum_bytes</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain The number of messages in the queue and the combined size in bytes of their data. </p>
+<p><p>Upon return, the integers pointed to by packets and accum_bytes will hold the number of messages in the queue, and the sum of the sizes of their data payloads respectively. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">packets</span></code>: A pointer to an integer which will be overwritten with the number of messages </li>
+<li><code class="docutils literal notranslate"><span class="pre">accum_bytes</span></code>: A pointer to an integer which will be overwritten with the combined number of bytes of the message data.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv311bsp_get_tagPiPv">
+<span id="_CPPv211bsp_get_tagPiPv"></span><span id="bsp_get_tag__iP.voidP"></span><span class="target" id="e__bsp_8h_1a808006e4c1d86e97d8c7a761010fb9e1"></span>void <code class="descname">bsp_get_tag</code><span class="sig-paren">(</span>int *<em>status</em>, void *<em>tag</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the tag and size of the next message without popping the message. </p>
+<p><p>Upon return, the integer pointed to by status will receive the size of the data payload in bytes of the next message in the queue. If there is no next message it will be set to -1. The buffer pointed to by tag should be large enough to store the tag. The minimum size can be obtained by calling ebsp_get_tagsize. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">status</span></code>: A pointer to an integer receiving the message data size in bytes. </li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code>: A pointer to a buffer receiving the message tag</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv38bsp_movePvi">
+<span id="_CPPv28bsp_movePvi"></span><span id="bsp_move__voidP.i"></span><span class="target" id="e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"></span>void <code class="descname">bsp_move</code><span class="sig-paren">(</span>void *<em>payload</em>, int <em>buffer_size</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the next message from the message queue and pop the message. </p>
+<p><p>This will copy the payload and pop the message from the queue. The size of the payload can be obtained by calling </p>
+<a class="reference internal" href="#e__bsp_8h_1a808006e4c1d86e97d8c7a761010fb9e1"><span class="std std-ref">bsp_get_tag()</span></a>. If <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> is smaller than the data payload then the data is truncated. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: A pointer to a buffer receiving the data payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">buffer_size</span></code>: The size of the buffer</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv310bsp_hpmovePPvPPv">
+<span id="_CPPv210bsp_hpmovePPvPPv"></span><span id="bsp_hpmove__voidPP.voidPP"></span><span class="target" id="e__bsp_8h_1a932e0b8b2e82f5ee402adecee0e921dc"></span>int <code class="descname">bsp_hpmove</code><span class="sig-paren">(</span>void **<em>tag_ptr_buf</em>, void **<em>payload_ptr_buf</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Obtain the next message, with tag, from the queue and pop the message. </p>
+<p><p>This function will give the user direct pointers to the tag and data of the message. This avoids the data copy as done in </p>
+<a class="reference internal" href="#e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"><span class="std std-ref">bsp_move()</span></a>.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>The number of bytes of the payload data</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">tag_ptr_buf</span></code>: A pointer to a pointer receiving the location of the tag </li>
+<li><code class="docutils literal notranslate"><span class="pre">payload_ptr_buf</span></code>: A pointer to a pointer receiving the location of the data pyaload </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Remark</strong></dt>
+<dd>that both tag and payload can be stored in external memory. Repeated use of these tags will lead to overall worse performance, such that <a class="reference internal" href="#e__bsp_8h_1a547cac84db9a5c1d399bacfe8b2963b2"><span class="std std-ref">bsp_move()</span></a> can actually outperform this variant. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../host_client/" class="btn btn-neutral float-right" title="Communicating with the Epiphany" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../variables/" class="btn btn-neutral" title="BSP Variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Coduin.
+      Last updated on Jun 15, 2018.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
