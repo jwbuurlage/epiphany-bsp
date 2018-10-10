@@ -23,13 +23,13 @@ The EBSP library is released under the LGPLv3. The `source code <https://github.
 About Coduin
 ------------
 
-`Coduin <http://codu.in>`_ (formerly Buurlage Wits) is a small company based in Utrecht, the Netherlands. Next to our work on software libraries and models for many-core processors in embedded systems, we are also active in the area of data analysis and predictive modelling.
+`Coduin <http://codu.in>`_ was a company based in Utrecht, the Netherlands. Besides developing software libraries and models for many-core processors in embedded systems, it was also active in the area of data analysis and predictive modelling.
 
 .. image:: img/coduin_logo.png
     :width: 250 px
     :align: center
 
-If you are using EBSP, or have any questions, remarks or ideas then please get in touch at info@buurlagewits.nl! We would very much like to hear from you.
+If you are using EBSP, or have any questions, remarks or ideas then please get in touch through GitHub!
 
 -----------------
 

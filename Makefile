@@ -104,7 +104,7 @@ unit_test:
 	@make -B; cd test; make -B; ./test.py
 
 docs: $(E_HEADERS) $(HOST_HEADERS)
-	@cd docs; doxygen Doxyfile_host && doxygen Doxyfile_e && make html
+	@cd docs/build; doxygen Doxyfile_host && doxygen Doxyfile_e && make html
 
 host_dirs:
 	@mkdir -p bin/host lib
