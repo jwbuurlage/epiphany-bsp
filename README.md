@@ -58,7 +58,7 @@ Epiphany BSP is released under the LGPLv3. See the file `COPYING` for details.
 
 ## Documentation
 
-Detailed documentation is provided at <http://www.codu.in/ebsp/docs>.
+Detailed documentation is provided at <http://jwbuurlage.github.io/epiphany-bsp>.
 
 ## Installing EBSP
 
@@ -66,11 +66,11 @@ If you want to write EBSP programs you need to have access to a Parallella board
 
 ### Cloning example project
 
-An easy way to get started with EBSP is to clone the [EBSP example project](http://www.github.com/coduin/ebsp-empty-project). See the README bundled with the example project for details.
+An easy way to get started with EBSP is to clone the [EBSP example project](http://www.github.com/jwbuurlage/ebsp-empty-project). See the README bundled with the example project for details.
 
 ### Using EBSP manually
 
-Alternatively you can download the [latest release](https://github.com/coduin/epiphany-bsp/releases). The EBSP library depends on the ESDK, and uses a custom linker file `ebsp_fast.ldf`. Your host program should link against `-lhost-bsp -le-hal -le-loader`. Your Epiphany kernel should link against `-le-bsp -le-lib` and use the linker script found at `ext/bsp/ebsp_fast.ldf`. For your convience we provide an example Makefile below:
+Alternatively you can download the [latest release](https://github.com/jwbuurlage/epiphany-bsp/releases). The EBSP library depends on the ESDK, and uses a custom linker file `ebsp_fast.ldf`. Your host program should link against `-lhost-bsp -le-hal -le-loader`. Your Epiphany kernel should link against `-le-bsp -le-lib` and use the linker script found at `ext/bsp/ebsp_fast.ldf`. For your convience we provide an example Makefile below:
 
 ```Makefile
 ESDK=${EPIPHANY_HOME}
@@ -127,6 +127,6 @@ Also thanks to:
 
 ## Issues
 
- The [issue tracker](https://github.com/coduin/epiphany-bsp/issues) is hosted on GitHub. We welcome pull requests, please pull request against the develop branch and add your name to the authors section of this README. Read [the GitHub flow guide](https://guides.github.com/introduction/flow/) for details.
+ The [issue tracker](https://github.com/jwbuurlage/epiphany-bsp/issues) is hosted on GitHub. We welcome pull requests, please pull request against the develop branch and add your name to the authors section of this README. Read [the GitHub flow guide](https://guides.github.com/introduction/flow/) for details.
  
  If you are using EBSP, or have any questions, remarks or ideas then please get in touch! We would very much like to hear from you.
